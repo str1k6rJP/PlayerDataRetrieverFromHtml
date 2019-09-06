@@ -43,6 +43,16 @@ public class HTMLParserService {
         return null;
     }
 
+    /**
+     * Returns list of all the players which have been managed to be retrieved by this parser method.
+     * Mechanics lays down in retrieving the whole html document with table containing teams' names and hyperlink
+     * to its' own pages containing information about players.
+     * Then the team is to be added to `teams` table and if succeeds, then the team's page is retrieved and parsed in order to retrieve players' data
+     * Every player successfully retrieved from the page and set to `players` table is to be added to the list to be retrieved
+     *
+     * @param urlToTeamLists hyper reference to the Wikipedia page containing table of Spain football clubs
+     * @return list of players successfully set to the database in form they were retrieved from the one
+     */
     public List<Player> getPlayersBySiteWithTeamList(String urlToTeamLists) {
         lastURLToTeamList = urlToTeamLists;
         Document document = getWebDoc(lastURLToTeamList);
@@ -85,6 +95,13 @@ if (Application.consoleWriterMode) {
         return players;
     }
 
+    /**
+     * Returns intermediate data which is represented by partial data retrieved from the web-page in form convenient for parsing
+     * and creating <code>Player</code> entities based on it
+     *
+     * @param htmlTableRows array containing html players' table split into rows
+     * @return convenient layouts for <code>Player</code> entities creation
+     */
     private String[] getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows) {
         String[] playerNameAndRoleRows = new String[htmlTableRows.length / 4];
         int requiredRowsCounter = 1, playerIndex = 0;
@@ -110,6 +127,15 @@ if (Application.consoleWriterMode) {
         return playerNameAndRoleRows;
     }
 
+    /**
+     * Returns <code>List<Player></code> containing all the players retrieved from the current club' html file
+     * (!!NOTE!! The list of players would contain only player models built5o set into database. They doesn't contain
+     * its' own id and ARE NOT SET into database yet)
+     *
+     * @param playerLayouts templates for <code>Player</code> models creation
+     * @param currentTeamId id retrieved from current team set into database
+     * @return List<Player>
+     */
     private List<Player> getPlayersByPlayerLayouts(String[] playerLayouts,int currentTeamId){
          List<Player> playerPrefabs = new ArrayList<>(playerLayouts.length);
         for (int i = 0; i < playerLayouts.length; i++) {

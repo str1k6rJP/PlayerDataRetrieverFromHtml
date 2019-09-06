@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import parser.Application;
 import parser.database.repositories.PlayerRepository;
 import parser.database.repositories.TeamRepository;
 import parser.database.tables.Player;
@@ -48,8 +49,10 @@ public class HTMLParserService {
         Element laliga = document.select("table.wikitable").first();
 
         Elements rows = laliga.getElementsByTag("tr");
-
-        // System.out.println(rows);
+if (Application.consoleWriterMode) {
+    System.out.println("Html rows with team names specification");
+    System.out.println(rows);
+}
         List<Player> players = new LinkedList<>();
 
         for (Element row : rows) {
@@ -74,19 +77,6 @@ public class HTMLParserService {
                 e.printStackTrace();
             }
             int currentTeamId = teamRepository.save(new Team(row.text().split("\\s+")[0])).getId();
-           /* String[] parseParts;
-
-            for (String playerHtmlChunk : playersTable
-            ) {
-                if ((playerHtmlChunk.contains("<th "))) {
-                    continue;
-                }
-                parseParts = playerHtmlChunk.split("title=\"[^\"]+\">");
-                players.add(playerRepository.save(new Player(parseParts[3].split("<")[0], parseParts[2].split("<")[0], currentTeamId)));
-                //System.out.println(parseParts.length+"\n"+parseParts[2]+"\n"+parseParts[3]);
-            }*/
-            //Element playersTable = row.toString();
-
             players.addAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart),currentTeamId));
             players.addAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart),currentTeamId));
 

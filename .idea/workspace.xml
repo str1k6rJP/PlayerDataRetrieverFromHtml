@@ -6,7 +6,18 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="" />
+    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +31,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -28,7 +42,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1QHOs00PJJvl0GAOUycJ8ycFHpZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -54,7 +70,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.parsehttp.jar">
+  <component name="RunManager" selected="JAR Application.parsehttp-1.0-SNAPSHOT.jar">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="spring_datasource_url" value="jdbc:mysql://localhost:3306/footballers" />
@@ -67,16 +83,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="parsehttp-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="spring_datasource_url" value="jdbc:mysql://localhost:3306/footballers" />
+        <env name="spring_datasource_username" value="root" />
+        <env name="spring_datasource_password" value="root0000" />
+      </envs>
+      <method v="2" />
+    </configuration>
     <configuration name="parsehttp.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/parsehttp_jar/parsehttp.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="spring_datasource_url" value="jdbc:mysql://localhost:3306/footballers" />
+        <env name="spring_datasource_username" value="root" />
+        <env name="spring_datasource_password" value="root0000" />
+      </envs>
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
       <item itemvalue="JAR Application.parsehttp.jar" />
+      <item itemvalue="JAR Application.parsehttp-1.0-SNAPSHOT.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.parsehttp-1.0-SNAPSHOT.jar" />
         <item itemvalue="JAR Application.parsehttp.jar" />
         <item itemvalue="Application.Application" />
       </list>
@@ -95,27 +129,38 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>119</line>
+          <line>109</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>128</line>
+          <line>118</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>113</line>
+          <line>103</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>110</line>
+          <line>100</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>

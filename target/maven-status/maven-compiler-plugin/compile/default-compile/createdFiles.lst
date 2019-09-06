@@ -1,0 +1,6 @@
+parser/database/tables/Team.class
+parser/services/HTMLParserService.class
+parser/database/tables/Player.class
+parser/database/repositories/PlayerRepository.class
+parser/Application.class
+parser/database/repositories/TeamRepository.class

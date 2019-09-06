@@ -1,0 +1,13 @@
+out
+
+.idea
+
+target
+
+!target/parsehttp-1.0-SNAPSHOT.jar
+
+hs_err_pid29308.log
+
+htmlside
+
+parsehttp.iml

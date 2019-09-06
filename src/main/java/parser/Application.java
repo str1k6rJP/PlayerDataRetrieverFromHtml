@@ -32,7 +32,7 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             consoleWriterMode = (args[0].equals("true") || args[0].equals("console")) || (Integer.parseInt(args[0]) == 1) ? true : false;
-        } catch (NullPointerException e){
+        } catch (ArrayIndexOutOfBoundsException e){
             consoleWriterMode = false;
             System.out.println("\n\n\n\n\nNo arguments were specified so consoleWriterMode set to false by default\n\n\n\n\n\n");
         }

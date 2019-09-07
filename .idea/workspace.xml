@@ -6,22 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="'added javadoc'">
-      <change afterPath="$PROJECT_DIR$/dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hs_err_pid29308.log" beforeDir="false" afterPath="$PROJECT_DIR$/hs_err_pid29308.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/database/repositories/TeamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/database/repositories/TeamRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar.original" beforeDir="false" />
-    </list>
+    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567759031003</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="'advanced stucture and added dockerfile and docker-plugin'">
+      <created>1567832048145</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1567832048145</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,7 +177,8 @@
     <MESSAGE value="'updated fat jar snapshot to actual code version'" />
     <MESSAGE value="'corrected some errors and bugs and also provided availability not to set argument'" />
     <MESSAGE value="'added javadoc'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'added javadoc'" />
+    <MESSAGE value="'advanced stucture and added dockerfile and docker-plugin'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'advanced stucture and added dockerfile and docker-plugin'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

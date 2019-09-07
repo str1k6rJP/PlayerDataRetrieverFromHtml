@@ -6,7 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="" />
+    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +25,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;" />
         <option value="str1k6rJP &lt;fkca.1ict18.mdv@gmail.com&gt;" />
       </list>
     </option>
@@ -156,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567832048145</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="'advanced stucture and added dockerfile and docker-plugin'">
+      <created>1567833413648</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1567833413648</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

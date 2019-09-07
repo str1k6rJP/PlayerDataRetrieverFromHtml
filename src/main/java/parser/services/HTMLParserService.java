@@ -87,8 +87,8 @@ if (Application.consoleWriterMode) {
                 e.printStackTrace();
             }
             int currentTeamId = teamRepository.save(new Team(row.text().split("\\s+")[0])).getId();
-            players.addAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart),currentTeamId));
-            players.addAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart),currentTeamId));
+            players.addAll(playerRepository.saveAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart),currentTeamId)));
+            players.addAll(playerRepository.saveAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart),currentTeamId)));
 
 
         }

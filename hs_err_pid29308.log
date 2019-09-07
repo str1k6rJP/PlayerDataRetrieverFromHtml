@@ -1,4 +1,4 @@
-#
+dockerfile#
 # There is insufficient memory for the Java Runtime Environment to continue.
 # Native memory allocation (mmap) failed to map 218103808 bytes for committing reserved memory.
 # Possible reasons:

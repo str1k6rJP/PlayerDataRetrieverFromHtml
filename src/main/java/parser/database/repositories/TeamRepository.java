@@ -22,7 +22,7 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
      * Returns an {@link Optional<Team>} entity which embeds <code>Team</code> entity corresponding to value of <code>teamName</code>
      *
      * @param teamName value of #team_name field of row stored in table assigned to <code>Team</code>
-     * @return <code>Optional<Team></code> ; <code>null</code> if no appropriate entities were found
+     * @return <code>Team</code> ; <code>null</code> if no appropriate entities were found
      */
     Team findByTeamName(String teamName);
 }

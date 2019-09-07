@@ -14,7 +14,6 @@ import java.util.List;
  * @author str1k6rJP
  * @version 1.0.0
  */
-@EnableAutoConfiguration
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 

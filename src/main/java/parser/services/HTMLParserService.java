@@ -53,7 +53,7 @@ public class HTMLParserService {
      * @param urlToTeamLists hyper reference to the Wikipedia page containing table of Spain football clubs
      * @return list of players successfully set to the database in form they were retrieved from the one
      */
-    public List<Player> getPlayersBySiteWithTeamList(String urlToTeamLists) {
+    public List<String> getPlayersStringBySiteWithTeamList(String urlToTeamLists) {
         lastURLToTeamList = urlToTeamLists;
         Document document = getWebDoc(lastURLToTeamList);
         Element laliga = document.select("table.wikitable").first();
@@ -63,7 +63,7 @@ if (Application.consoleWriterMode) {
     System.out.println("Html rows with team names specification");
     System.out.println(rows);
 }
-        List<Player> players = new LinkedList<>();
+        List<String> playerStrings = new LinkedList<>();
 
         for (Element row : rows) {
             if (row.toString().contains("<th>")) {
@@ -86,13 +86,20 @@ if (Application.consoleWriterMode) {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int currentTeamId = teamRepository.save(new Team(row.text().split("\\s+")[0])).getId();
-            players.addAll(playerRepository.saveAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart),currentTeamId)));
-            players.addAll(playerRepository.saveAll(getPlayersByPlayerLayouts(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart),currentTeamId)));
+            //System.out.println(row.text());
+            int currentTeamId ;
+            //currentTeamId= teamRepository.save(new Team(row.text().split("\\s+")[0])).getId();
+            currentTeamId= teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
+            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart,currentTeamId));
+            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart,currentTeamId));
 
 
         }
-        return players;
+        return playerStrings;
+    }
+
+    public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs){
+        return playerRepository.saveAll(playerPrefabs);
     }
 
     /**
@@ -100,25 +107,31 @@ if (Application.consoleWriterMode) {
      * and creating <code>Player</code> entities based on it
      *
      * @param htmlTableRows array containing html players' table split into rows
+     * @param currentTeamId id retrieved from current team set into database
      * @return convenient layouts for <code>Player</code> entities creation
      */
-    private String[] getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows) {
-        String[] playerNameAndRoleRows = new String[htmlTableRows.length / 4];
+    private List<String> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows,int currentTeamId) {
+        int arrayLength= htmlTableRows.length / 4;
+        List<String> playerNameAndRoleRows = new ArrayList<>(arrayLength);
         int requiredRowsCounter = 1, playerIndex = 0;
+        String temp="";
+
         for (String htmlRow : htmlTableRows) {
-            if (playerIndex>=playerNameAndRoleRows.length){
+            if (playerIndex>=arrayLength){
                 break;
             }
             requiredRowsCounter++;
-
             switch (requiredRowsCounter) {
                 default:
                     break;
                 case 4:
-                    playerNameAndRoleRows[playerIndex] = htmlRow.split("title=\"")[1].split("[\"(]")[0]+"::";
+                    temp=htmlRow.split("title=\"")[1].split("[\"(]")[0]+"::";
                     break;
                 case 5:
-                    playerNameAndRoleRows[playerIndex] += htmlRow.split("title=\"")[1].split("[\"(]")[0];
+                    temp += htmlRow.split("title=\"")[1].split("[\"(]")[0];
+                    temp += "::"+currentTeamId;
+                    playerNameAndRoleRows.add(temp);
+                    temp="";
                     requiredRowsCounter = 1;
                     playerIndex++;
                     break;
@@ -133,16 +146,32 @@ if (Application.consoleWriterMode) {
      * its' own id and ARE NOT SET into database yet)
      *
      * @param playerLayouts templates for <code>Player</code> models creation
-     * @param currentTeamId id retrieved from current team set into database
+     *
      * @return List<Player>
      */
-    private List<Player> getPlayersByPlayerLayouts(String[] playerLayouts,int currentTeamId){
-         List<Player> playerPrefabs = new ArrayList<>(playerLayouts.length);
-        for (int i = 0; i < playerLayouts.length; i++) {
-            String[] temp = playerLayouts[i].split("::");
-            playerPrefabs.add(new Player(temp[1],temp[0],currentTeamId));
+    public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts){
+         List<Player> playerPrefabs = new ArrayList<>(playerLayouts.size());
+        for (int i = 0; i < playerLayouts.size(); i++) {
+            String[] temp = playerLayouts.get(i).split("::");
+            playerPrefabs.add(new Player(temp[1],temp[0],Integer.parseInt(temp[2])));
         }
         return playerPrefabs;
+    }
+
+    public String getPlayersInJsonFormat(List<String> playerLayouts){
+        StringBuilder sb= new StringBuilder();
+
+        sb.append('[');
+        for (String playerLayout:playerLayouts
+             ) {
+            String[] values=playerLayout.split("::");
+            sb.append("{surname:").append(values[1]).append(",role:").append(values[0]).append(",teamId:").append(values[2]).append("},");
+        }
+        if (sb.charAt(sb.length()-1)==',') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        sb.append(']');
+return sb.toString();
     }
 
 

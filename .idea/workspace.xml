@@ -8,8 +8,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/service/client/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/HttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/service/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567932338707</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="'project sructure changed'">
+      <created>1568115966312</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1568115966312</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,30 +223,31 @@
     <MESSAGE value="'added javadoc'" />
     <MESSAGE value="'advanced stucture and added dockerfile and docker-plugin'" />
     <MESSAGE value="'now adds teams to database!'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'now adds teams to database!'" />
+    <MESSAGE value="'project sructure changed'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'project sructure changed'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>126</line>
-          <option name="timeStamp" value="21" />
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/Application.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="22" />
+          <line>97</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>120</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="25" />
+          <line>91</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

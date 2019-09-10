@@ -1,4 +1,4 @@
-package parser.service.client;
+package parser.services.client.implementations;
 
 import parser.database.tables.Player;
 import parser.database.tables.Team;

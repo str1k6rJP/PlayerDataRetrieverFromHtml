@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import parser.services.HTMLParserService;
 import parser.services.client.implementations.ApacheHttpClient;
 import parser.services.client.implementations.HttpClient;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @SpringBootApplication
+@EnableSwagger2
 public class Application implements CommandLineRunner {
 
     public static boolean consoleWriterMode;

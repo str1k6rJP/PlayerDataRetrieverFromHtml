@@ -7,12 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/controllers/PArserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/controllers/ParserController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568115966312</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="'project architecture and HtmlParser were significantly rewritten'">
+      <created>1568122620860</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1568122620860</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -224,7 +227,8 @@
     <MESSAGE value="'advanced stucture and added dockerfile and docker-plugin'" />
     <MESSAGE value="'now adds teams to database!'" />
     <MESSAGE value="'project sructure changed'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'project sructure changed'" />
+    <MESSAGE value="'project architecture and HtmlParser were significantly rewritten'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'project architecture and HtmlParser were significantly rewritten'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -236,7 +240,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/Application.java</url>
-          <line>48</line>
+          <line>47</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

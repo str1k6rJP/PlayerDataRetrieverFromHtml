@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import parser.database.tables.Player;
-import parser.services.client.implementations.HttpClient;
+import parser.services.HTMLParserService;
 
 import java.util.List;
 
@@ -15,17 +15,17 @@ import java.util.List;
 @RequestMapping("/autofill")
 public class ParserController {
 
-@Autowired
-    HttpClient httpClient;
+    @Autowired
+    private HTMLParserService parserService;
 
 
     @PostMapping
-    public List<Player> putPlayersToAppViaAPI(){
+    public List<Player> putPlayersToAppViaAPI() {
         return null;
     }
 
     @PostMapping("/setLink/{link}")
-    public String setNewTeamListSite(@RequestParam String link){
-     return null;
+    public String setNewTeamListSite(@RequestParam String link) {
+        return null;
     }
 }

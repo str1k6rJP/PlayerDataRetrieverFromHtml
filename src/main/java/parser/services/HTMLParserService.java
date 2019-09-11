@@ -11,6 +11,7 @@ import parser.database.repositories.PlayerRepository;
 import parser.database.repositories.TeamRepository;
 import parser.database.tables.Player;
 import parser.database.tables.Team;
+import parser.services.client.HttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,9 +32,18 @@ public class HTMLParserService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private HttpClient apacheHttpClient;
+
+    private List<String> teamList;
+
+    private List<String> playerList;
+
     private String lastURLToTeamList;
 
-    private String linkToSiteWithTeams="https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain";
+    private String linkToSiteWithTeams = "https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain";
+
+    private int sizeOfArrayDesiredToBeSet = 500;
 
     /**
      * Returns web document by hyper reference predefined or defined by {@link #setLinkToSiteWithTeams(String)}
@@ -42,7 +52,7 @@ public class HTMLParserService {
      */
     public Document getWebDoc() {
         try {
-           return Jsoup.connect(linkToSiteWithTeams).get();
+            return Jsoup.connect(linkToSiteWithTeams).get();
         } catch (IOException e) {
             try {
                 return Jsoup.connect(lastURLToTeamList).get();
@@ -63,15 +73,18 @@ public class HTMLParserService {
      * @return list of players retrieved from the web document
      */
     public List<String> getPlayersStringBySiteWithTeamList() {
+        if (teamList == null) {
+            teamList = new ArrayList<>(sizeOfArrayDesiredToBeSet);
+        }
 
         Document document = getWebDoc();
         Element laliga = document.select("table.wikitable").first();
 
         Elements rows = laliga.getElementsByTag("tr");
-if (Application.consoleWriterMode) {
-    System.out.println("Html rows with team names specification");
-    System.out.println(rows);
-}
+        if (Application.consoleWriterMode) {
+            System.out.println("Html rows with team names specification");
+            System.out.println(rows);
+        }
         List<String> playerStrings = new LinkedList<>();
 
         for (Element row : rows) {
@@ -95,20 +108,18 @@ if (Application.consoleWriterMode) {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //System.out.println(row.text());
-            int currentTeamId ;
-            //currentTeamId= teamRepository.save(new Team(row.text().split("\\s+")[0])).getId();
-            currentTeamId= teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
-            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart,currentTeamId));
-            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart,currentTeamId));
 
+            int currentTeamId;
+            currentTeamId = teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
+            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
+            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
 
         }
         lastURLToTeamList = linkToSiteWithTeams;
         return playerStrings;
     }
 
-    public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs){
+    public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs) {
         return playerRepository.saveAll(playerPrefabs);
     }
 
@@ -120,14 +131,14 @@ if (Application.consoleWriterMode) {
      * @param currentTeamId id retrieved from current team set into database
      * @return convenient layouts for <code>Player</code> entities creation
      */
-    private List<String> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows,int currentTeamId) {
-        int arrayLength= htmlTableRows.length / 4;
+    private List<String> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows, int currentTeamId) {
+        int arrayLength = htmlTableRows.length / 4;
         List<String> playerNameAndRoleRows = new ArrayList<>(arrayLength);
         int requiredRowsCounter = 1, playerIndex = 0;
-        String temp="";
+        String temp = "";
 
         for (String htmlRow : htmlTableRows) {
-            if (playerIndex>=arrayLength){
+            if (playerIndex >= arrayLength) {
                 break;
             }
             requiredRowsCounter++;
@@ -135,19 +146,24 @@ if (Application.consoleWriterMode) {
                 default:
                     break;
                 case 4:
-                    temp=htmlRow.split("title=\"")[1].split("[\"(]")[0]+"::";
+                    temp = htmlRow.split("title=\"")[1].split("[\"(]")[0] + "::";
                     break;
                 case 5:
                     temp += htmlRow.split("title=\"")[1].split("[\"(]")[0];
-                    temp += "::"+currentTeamId;
+                    temp += "::" + currentTeamId;
                     playerNameAndRoleRows.add(temp);
-                    temp="";
+                    temp = "";
                     requiredRowsCounter = 1;
                     playerIndex++;
                     break;
             }
         }
         return playerNameAndRoleRows;
+    }
+
+
+    public String setLink(String url) {
+        return setLinkToSiteWithTeams("link");
     }
 
     /**
@@ -158,11 +174,11 @@ if (Application.consoleWriterMode) {
      * @param playerLayouts templates for <code>Player</code> models creation
      * @return List<Player>
      */
-    public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts){
-         List<Player> playerPrefabs = new ArrayList<>(playerLayouts.size());
+    public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts) {
+        List<Player> playerPrefabs = new ArrayList<>(playerLayouts.size());
         for (int i = 0; i < playerLayouts.size(); i++) {
             String[] temp = playerLayouts.get(i).split("::");
-            playerPrefabs.add(new Player(temp[1],temp[0],Integer.parseInt(temp[2])));
+            playerPrefabs.add(new Player(temp[1], temp[0], Integer.parseInt(temp[2])));
         }
         return playerPrefabs;
     }
@@ -173,20 +189,20 @@ if (Application.consoleWriterMode) {
      * @param playerLayouts list of all the player string layouts
      * @return JSON string
      */
-    public String getPlayersInJsonFormat(List<String> playerLayouts){
-        StringBuilder sb= new StringBuilder();
+    public String getPlayersInJsonFormat(List<String> playerLayouts) {
+        StringBuilder sb = new StringBuilder();
 
         sb.append('[');
-        for (String playerLayout:playerLayouts
-             ) {
-            String[] values=playerLayout.split("::");
+        for (String playerLayout : playerLayouts
+        ) {
+            String[] values = playerLayout.split("::");
             sb.append("{surname:").append(values[1]).append(",role:").append(values[0]).append(",teamId:").append(values[2]).append("},");
         }
-        if (sb.charAt(sb.length()-1)==',') {
+        if (sb.charAt(sb.length() - 1) == ',') {
             sb.deleteCharAt(sb.length() - 1);
         }
         sb.append(']');
-return sb.toString();
+        return sb.toString();
     }
 
     /**

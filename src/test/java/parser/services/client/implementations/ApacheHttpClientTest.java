@@ -2,6 +2,7 @@ package parser.services.client.implementations;
 
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,19 @@ public class ApacheHttpClientTest {
             ,port = "8083"
             ,request = "team"
             ;
+    @Before
     @Test
     public void testConnectionParams() throws Exception{
         apacheHttpClient.setConnectionParams(host,port,request);
         String connectionParams;
         System.out.println(connectionParams=apacheHttpClient.getConnectionParams());
-        assert(connectionParams.equals(host+":"+port+"/"+request));
+        assert(connectionParams.equals("http://"+host+":"+port+"/"+request));
     }
 
     String userName = "str1k6r"
-            ,password = "that'sMe"
+            ,password = "that'sME"
             ;
+    @Before
     @Test
     public void testCredentials() throws Exception{
         assert (apacheHttpClient.setCredentials(userName,password));

@@ -2,16 +2,19 @@ package parser.services.client.implementations;
 
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Service;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 
 @Service
@@ -56,8 +59,11 @@ public class ApacheHttpClient implements HttpClient {
         setRequest(request);
     }
 
+    private String prebuiltConnectionParams;
     public String getConnectionParams(){
-        return host+":"+port+"/"+request;
+        return prebuiltConnectionParams==null
+                ?prebuiltConnectionParams="http://"+host+":"+port+"/"+request
+                :"http://"+host+":"+port+"/"+request;
     }
 
     private void setHost(String host) { this.host = host; }
@@ -81,7 +87,8 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public int saveTeam(String jsonStringWithName) throws IOException,AuthenticationException {
-        String requestParameter = jsonStringWithName.split(":")[1];
+        ResponseHandler<String> handler = new BasicResponseHandler();
+        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0];
 
         HttpPost postTeam = new HttpPost(getConnectionParams()+"/"+requestParameter);
 
@@ -90,10 +97,22 @@ public class ApacheHttpClient implements HttpClient {
         CloseableHttpResponse response = client.execute(postTeam);
 
         if (response.getStatusLine().getStatusCode() == 200) {
-            response.close();
 
+
+
+//            String tmp = handler.handleResponse(response);
+
+            StringBuilder sb= new StringBuilder();
+            try (InputStream responseStream = response.getEntity().getContent();){
+                int currentByte;
+                do{
+                currentByte=responseStream.read();
+                sb.append((char)currentByte);
+                } while (currentByte != -1);
+            }
+            response.close();
             client.close();
-            System.out.println(response.getEntity().getContent().toString());
+            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1]);
         }
         return -1;
     }

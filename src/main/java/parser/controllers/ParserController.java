@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import parser.database.tables.Player;
 import parser.services.HTMLParserService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/autofill")
@@ -20,7 +17,7 @@ public class ParserController {
 
 
     @PostMapping
-    public List<Player> putPlayersToAppViaAPI() {
+    public String putPlayersToAppViaAPI() {
         return null;
     }
 

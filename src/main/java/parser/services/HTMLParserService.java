@@ -1,5 +1,6 @@
 package parser.services;
 
+import org.apache.http.auth.AuthenticationException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,10 +8,6 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import parser.Application;
-import parser.database.repositories.PlayerRepository;
-import parser.database.repositories.TeamRepository;
-import parser.database.tables.Player;
-import parser.database.tables.Team;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
@@ -24,13 +21,6 @@ import java.util.List;
  */
 @Service
 public class HTMLParserService {
-
-
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @Autowired
     private HttpClient apacheHttpClient;
@@ -108,9 +98,18 @@ public class HTMLParserService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             int currentTeamId;
-            currentTeamId = teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
+try {
+     currentTeamId = apacheHttpClient.saveTeam("{teamName:" + row.toString().split("title=\"")[1].split("\"")[0] + "}");
+} catch (AuthenticationException e){
+    System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
+    e.printStackTrace();
+    break;
+} catch (IOException e) {
+    System.err.println("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop.");
+    continue;
+}
+       //     currentTeamId = teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
             playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
             playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
 
@@ -119,9 +118,9 @@ public class HTMLParserService {
         return playerStrings;
     }
 
-    public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs) {
+   /* public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs) {
         return playerRepository.saveAll(playerPrefabs);
-    }
+    }*/
 
     /**
      * Returns intermediate data which is represented by partial data retrieved from the web-page in form convenient for parsing
@@ -166,14 +165,14 @@ public class HTMLParserService {
         return setLinkToSiteWithTeams("link");
     }
 
-    /**
+   /* *//**
      * Returns <code>List<Player></code> containing all the players retrieved from the current club' html file
      * (!!NOTE!! The list of players would contain only player models built to be set into database. They doesn't contain
      * its' own id and ARE NOT SET into database yet)
      *
      * @param playerLayouts templates for <code>Player</code> models creation
      * @return List<Player>
-     */
+     *//*
     public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts) {
         List<Player> playerPrefabs = new ArrayList<>(playerLayouts.size());
         for (int i = 0; i < playerLayouts.size(); i++) {
@@ -181,7 +180,7 @@ public class HTMLParserService {
             playerPrefabs.add(new Player(temp[1], temp[0], Integer.parseInt(temp[2])));
         }
         return playerPrefabs;
-    }
+    }*/
 
     /**
      * Retorns JSON string containing all the players' entities

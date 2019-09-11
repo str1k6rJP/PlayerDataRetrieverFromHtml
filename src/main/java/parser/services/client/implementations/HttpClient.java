@@ -1,8 +1,10 @@
 package parser.services.client.implementations;
 
+import org.apache.http.auth.AuthenticationException;
 import parser.database.tables.Player;
 import parser.database.tables.Team;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface HttpClient {
@@ -15,7 +17,7 @@ public interface HttpClient {
      *
      * @return <code>List<Player></code>
      */
-    List<Player> savePlayers(List<Player> playerPrefabsToSet);
+    List<Player> savePlayers(List<Player> playerPrefabsToSet) throws IOException, AuthenticationException;
 
     /**
      * Receives <code>Team</code> prefab to save in, returns entity of <code>Team</code> which was saved.
@@ -25,6 +27,8 @@ public interface HttpClient {
      * @return <code>Team</code>
      */
     Team saveTeam(Team teamPrefabToSet);
+
+    String setLink(String url);
 
 
 }

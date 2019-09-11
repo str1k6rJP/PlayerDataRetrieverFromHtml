@@ -19,20 +19,19 @@ import java.util.List;
  */
 @SpringBootApplication
 @EnableSwagger2
-public class Application implements CommandLineRunner {
+public class Application{
 
     public static boolean consoleWriterMode;
-    @Autowired
-    private HTMLParserService htmlParserService;
 
-    private String linkToSiteWithTeams="https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain";
+
+
     public static void main(String[] args) {
 
         SpringApplication.run(Application.class,args);
 
     }
 
-    @Override
+   /* @Override
     public void run(String... args) throws Exception {
 
         try {
@@ -46,9 +45,5 @@ if (consoleWriterMode){
     System.out.println("\n\n\n\n\n\n\n\n\n\nConsoleWriterMode set to true\n" +
             "You will be able to see intermediate and while-processing data\n\n\n\n\n\n\n\n\n\n");
 }
-
-        String jsonString= htmlParserService.getPlayersInJsonFormat(htmlParserService
-                .getPlayersStringBySiteWithTeamList(linkToSiteWithTeams));
-
-    }
+    }*/
 }

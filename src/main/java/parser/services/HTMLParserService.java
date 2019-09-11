@@ -33,29 +33,38 @@ public class HTMLParserService {
 
     private String lastURLToTeamList;
 
-    public Document getWebDoc(String url) {
+    private String linkToSiteWithTeams="https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain";
+
+    /**
+     * Returns web document by hyper reference predefined or defined by {@link #setLinkToSiteWithTeams(String)}
+     *
+     * @return webpage
+     */
+    public Document getWebDoc() {
         try {
-            Document document = Jsoup.connect(url).get();
-            return document;
+           return Jsoup.connect(linkToSiteWithTeams).get();
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                return Jsoup.connect(lastURLToTeamList).get();
+            } catch (IOException e1) {
+                e.printStackTrace();
+                System.out.println("\n\n\n");
+                e1.printStackTrace();
+            }
         }
         return null;
     }
 
     /**
-     * Returns list of all the players which have been managed to be retrieved by this parser method.
+     * Returns list of all the players templates retrieved by this parser method.
      * Mechanics lays down in retrieving the whole html document with table containing teams' names and hyperlink
      * to its' own pages containing information about players.
-     * Then the team is to be added to `teams` table and if succeeds, then the team's page is retrieved and parsed in order to retrieve players' data
-     * Every player successfully retrieved from the page and set to `players` table is to be added to the list to be retrieved
      *
-     * @param urlToTeamLists hyper reference to the Wikipedia page containing table of Spain football clubs
-     * @return list of players successfully set to the database in form they were retrieved from the one
+     * @return list of players retrieved from the web document
      */
-    public List<String> getPlayersStringBySiteWithTeamList(String urlToTeamLists) {
-        lastURLToTeamList = urlToTeamLists;
-        Document document = getWebDoc(lastURLToTeamList);
+    public List<String> getPlayersStringBySiteWithTeamList() {
+
+        Document document = getWebDoc();
         Element laliga = document.select("table.wikitable").first();
 
         Elements rows = laliga.getElementsByTag("tr");
@@ -95,6 +104,7 @@ if (Application.consoleWriterMode) {
 
 
         }
+        lastURLToTeamList = linkToSiteWithTeams;
         return playerStrings;
     }
 
@@ -142,11 +152,10 @@ if (Application.consoleWriterMode) {
 
     /**
      * Returns <code>List<Player></code> containing all the players retrieved from the current club' html file
-     * (!!NOTE!! The list of players would contain only player models built5o set into database. They doesn't contain
+     * (!!NOTE!! The list of players would contain only player models built to be set into database. They doesn't contain
      * its' own id and ARE NOT SET into database yet)
      *
      * @param playerLayouts templates for <code>Player</code> models creation
-     *
      * @return List<Player>
      */
     public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts){
@@ -158,6 +167,12 @@ if (Application.consoleWriterMode) {
         return playerPrefabs;
     }
 
+    /**
+     * Retorns JSON string containing all the players' entities
+     *
+     * @param playerLayouts list of all the player string layouts
+     * @return JSON string
+     */
     public String getPlayersInJsonFormat(List<String> playerLayouts){
         StringBuilder sb= new StringBuilder();
 
@@ -174,5 +189,14 @@ if (Application.consoleWriterMode) {
 return sb.toString();
     }
 
-
+    /**
+     * Sets link to be used when method {@link #getWebDoc()} called
+     *
+     * @param linkToSiteWithTeams link to site with table containing teams and references to its'pages
+     * @return link contained by <code>this.linkToSiteWithTeams</code> after method's execution
+     */
+    public String setLinkToSiteWithTeams(String linkToSiteWithTeams) {
+        this.linkToSiteWithTeams = linkToSiteWithTeams;
+        return linkToSiteWithTeams;
+    }
 }

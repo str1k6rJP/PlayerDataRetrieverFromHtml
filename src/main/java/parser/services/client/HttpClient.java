@@ -2,6 +2,7 @@ package parser.services.client;
 
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import parser.errors.InvalidInputError;
 
 import java.io.IOException;
 
@@ -27,6 +28,10 @@ public interface HttpClient {
     int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException;
 
     void setConnectionParams(String host, String port);
+
+    String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError;
+
+    String getConnectionParams();
 
     String getConnectionParams(String request);
 

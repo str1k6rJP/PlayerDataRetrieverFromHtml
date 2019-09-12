@@ -32,7 +32,7 @@ public class HTMLParserService {
 
     private String lastURLToTeamList;
 
-    private String linkToSiteWithTeams ;
+    private String linkToSiteWithTeams;
 
     private int sizeOfArrayDesiredToBeSet = 500;
 
@@ -100,17 +100,16 @@ public class HTMLParserService {
                 e.printStackTrace();
             }
             int currentTeamId;
-try {
-     currentTeamId = apacheHttpClient.saveTeam("{teamName:" + row.toString().split("title=\"")[1].split("\"")[0] + "}");
-} catch (AuthenticationException e){
-    System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
-    e.printStackTrace();
-    break;
-} catch (IOException e) {
-    System.err.println("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop.");
-    continue;
-}
-       //     currentTeamId = teamRepository.save(new Team(row.toString().split("title=\"")[1].split("\"")[0])).getId();
+            try {
+                currentTeamId = apacheHttpClient.saveTeam("{teamName:" + row.toString().split("title=\"")[1].split("\"")[0] + "}");
+            } catch (AuthenticationException e) {
+                System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
+                e.printStackTrace();
+                break;
+            } catch (IOException e) {
+                System.err.println("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop.");
+                continue;
+            }
             playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
             playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
 
@@ -118,10 +117,6 @@ try {
         lastURLToTeamList = linkToSiteWithTeams;
         return playerStrings;
     }
-
-   /* public List<Player> saveDirectlyToDatabase(List<Player> playerPrefabs) {
-        return playerRepository.saveAll(playerPrefabs);
-    }*/
 
     /**
      * Returns intermediate data which is represented by partial data retrieved from the web-page in form convenient for parsing
@@ -161,24 +156,6 @@ try {
         return playerNameAndRoleRows;
     }
 
-
-   /* *//**
-     * Returns <code>List<Player></code> containing all the players retrieved from the current club' html file
-     * (!!NOTE!! The list of players would contain only player models built to be set into database. They doesn't contain
-     * its' own id and ARE NOT SET into database yet)
-     *
-     * @param playerLayouts templates for <code>Player</code> models creation
-     * @return List<Player>
-     *//*
-    public List<Player> getPlayersByPlayerLayouts(List<String> playerLayouts) {
-        List<Player> playerPrefabs = new ArrayList<>(playerLayouts.size());
-        for (int i = 0; i < playerLayouts.size(); i++) {
-            String[] temp = playerLayouts.get(i).split("::");
-            playerPrefabs.add(new Player(temp[1], temp[0], Integer.parseInt(temp[2])));
-        }
-        return playerPrefabs;
-    }*/
-
     /**
      * Returns JSON string containing all the players' entities
      *
@@ -206,8 +183,8 @@ try {
         return apacheHttpClient.getConnectionParams("");
     }
 
-    public UsernamePasswordCredentials setUsernamePasswordCredentials(String username,String password){
-        return apacheHttpClient.setCredentials(username,password)?apacheHttpClient.getCredentials():null;
+    public UsernamePasswordCredentials setUsernamePasswordCredentials(String username, String password) {
+        return apacheHttpClient.setCredentials(username, password) ? apacheHttpClient.getCredentials() : null;
     }
 
     /**

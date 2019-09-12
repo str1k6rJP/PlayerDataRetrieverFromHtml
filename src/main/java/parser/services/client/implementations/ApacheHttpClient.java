@@ -17,16 +17,12 @@ import parser.services.client.HttpClient;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 @Service
 public class ApacheHttpClient implements HttpClient {
+    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format http[s]://<hostname>:<port>/";
     private String host, port;
     private String username, password;
-
-    private String requestForSaveTeam = "team"
-            , requsetForSavePlayers="player/add";
-    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams="\nThe input should be in format http[s]://<hostname>:<port>/";
-
+    private String requestForSaveTeam = "team", requsetForSavePlayers = "player/add";
     private CloseableHttpClient client = HttpClients.createDefault();
     private UsernamePasswordCredentials credentials;
     private String prebuiltConnectionParams;
@@ -54,7 +50,7 @@ public class ApacheHttpClient implements HttpClient {
     @Override
     public int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException {
         ResponseHandler<String> handler = new BasicResponseHandler();
-        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0].replace(' ','_');
+        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0].replace(' ', '_');
 
         HttpPost postTeam = new HttpPost(getConnectionParams(requestForSaveTeam) + "/" + requestParameter);
 
@@ -78,26 +74,35 @@ public class ApacheHttpClient implements HttpClient {
         return -1;
     }
 
+    @Override
     public void setConnectionParams(String host, String port) {
         setHost(host);
         setPort(port);
         prebuiltConnectionParams = prebuiltConnectionParams = "http://" + host + ":" + port + "/";
     }
 
-    public void setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
+    @Override
+    public String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
         String[] s = singleLineConnectionParams.trim().split("://|:|");
         try {
-            setConnectionParams(s[0],s[1]);
-        } catch (IndexOutOfBoundsException e){
-            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams+e.getMessage());
+            setConnectionParams(s[0], s[1]);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams + e.getMessage());
         }
+        return getConnectionParams("");
     }
 
+    @Override
+    public String getConnectionParams() {
+        return prebuiltConnectionParams;
+    }
 
+    @Override
     public String getConnectionParams(String request) {
         return prebuiltConnectionParams + request;
     }
 
+    @Override
     public boolean setCredentials(String username, String password) {
         setUsername(username);
         setPassword(password);
@@ -105,6 +110,7 @@ public class ApacheHttpClient implements HttpClient {
         return credentials.getUserName().equals(username) && credentials.getPassword().equals(password);
     }
 
+    @Override
     public UsernamePasswordCredentials getCredentials() {
         return credentials;
     }

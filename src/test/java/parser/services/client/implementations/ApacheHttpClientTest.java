@@ -21,11 +21,13 @@ public class ApacheHttpClientTest {
             ,request = "team"
             ;
     @Before
+    public void setConnectionParams(){
+        apacheHttpClient.setConnectionParams(host,port);
+    }
     @Test
     public void testConnectionParams() throws Exception{
-        apacheHttpClient.setConnectionParams(host,port,request);
         String connectionParams;
-        System.out.println(connectionParams=apacheHttpClient.getConnectionParams());
+        System.out.println(connectionParams=apacheHttpClient.getConnectionParams(request));
         assert(connectionParams.equals("http://"+host+":"+port+"/"+request));
     }
 
@@ -48,5 +50,15 @@ public class ApacheHttpClientTest {
         System.out.println(teamId);
         assert (teamId>0);
     }
+
+    String jsonPlayersString =
+            "[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"},{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}]"
+            ;
+    @Test
+    public void testSavePlayers() throws Exception{
+        apacheHttpClient.setConnectionParams(host,port);
+        assert apacheHttpClient.savePlayers(jsonPlayersString);
+    }
+
 
 }

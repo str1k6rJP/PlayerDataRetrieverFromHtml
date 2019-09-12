@@ -1,6 +1,7 @@
 package parser.services;
 
 import org.apache.http.auth.AuthenticationException;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,7 +32,7 @@ public class HTMLParserService {
 
     private String lastURLToTeamList;
 
-    private String linkToSiteWithTeams = "https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain";
+    private String linkToSiteWithTeams ;
 
     private int sizeOfArrayDesiredToBeSet = 500;
 
@@ -161,10 +162,6 @@ try {
     }
 
 
-    public String setLink(String url) {
-        return setLinkToSiteWithTeams("link");
-    }
-
    /* *//**
      * Returns <code>List<Player></code> containing all the players retrieved from the current club' html file
      * (!!NOTE!! The list of players would contain only player models built to be set into database. They doesn't contain
@@ -183,7 +180,7 @@ try {
     }*/
 
     /**
-     * Retorns JSON string containing all the players' entities
+     * Returns JSON string containing all the players' entities
      *
      * @param playerLayouts list of all the player string layouts
      * @return JSON string
@@ -195,13 +192,22 @@ try {
         for (String playerLayout : playerLayouts
         ) {
             String[] values = playerLayout.split("::");
-            sb.append("{surname:").append(values[1]).append(",role:").append(values[0]).append(",teamId:").append(values[2]).append("},");
+            sb.append("{\"surname\":\"").append(values[1]).append("\",\"role\":\"").append(values[0]).append("\",\"teamId\":\"").append(values[2]).append("\"},");
         }
         if (sb.charAt(sb.length() - 1) == ',') {
             sb.deleteCharAt(sb.length() - 1);
         }
         sb.append(']');
         return sb.toString();
+    }
+
+    public String setConnectionParams(String host, String port) {
+        apacheHttpClient.setConnectionParams(host, port);
+        return apacheHttpClient.getConnectionParams("");
+    }
+
+    public UsernamePasswordCredentials setUsernamePasswordCredentials(String username,String password){
+        return apacheHttpClient.setCredentials(username,password)?apacheHttpClient.getCredentials():null;
     }
 
     /**

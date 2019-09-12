@@ -11,6 +11,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Service;
+import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
@@ -19,24 +20,22 @@ import java.io.InputStream;
 
 @Service
 public class ApacheHttpClient implements HttpClient {
-    private String host, port, request;
+    private String host, port;
     private String username, password;
+
+    private String requestForSaveTeam = "team"
+            , requsetForSavePlayers="player/add";
+    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams="\nThe input should be in format http[s]://<hostname>:<port>/";
 
     private CloseableHttpClient client = HttpClients.createDefault();
     private UsernamePasswordCredentials credentials;
-
+    private String prebuiltConnectionParams;
 
     @Override
     public boolean savePlayers(String jsonString) throws IOException, AuthenticationException {
-       /* HttpUriRequest request = RequestBuilder.get()
-                .setUri(serviceUrl+"player/add")
-                .setHeader(HttpHeaders.CONTENT_TYPE, )
-                .build();*/
-        HttpPost postPlayers = new HttpPost(getConnectionParams());
-        /*String jsonString = htmlParserService.getPlayersInJsonFormat(htmlParserService
-                .getPlayersStringBySiteWithTeamList());*/
 
-        
+        HttpPost postPlayers = new HttpPost(getConnectionParams(requsetForSavePlayers));
+
         postPlayers.setEntity(new StringEntity(jsonString));
         postPlayers.setHeader("Accept", "application/json");
         postPlayers.setHeader("content-type", "application/json");
@@ -47,50 +46,17 @@ public class ApacheHttpClient implements HttpClient {
 
         if (response.getStatusLine().getStatusCode() == 200) {
             response.close();
-            client.close();
             return true;
         }
         return false;
     }
 
-    public void setConnectionParams(String host, String port, String request) {
-        setHost(host);
-        setPort(port);
-        setRequest(request);
-    }
-
-    private String prebuiltConnectionParams;
-    public String getConnectionParams(){
-        return prebuiltConnectionParams==null
-                ?prebuiltConnectionParams="http://"+host+":"+port+"/"+request
-                :"http://"+host+":"+port+"/"+request;
-    }
-
-    private void setHost(String host) { this.host = host; }
-    private void setPort(String port) { this.port = port; }
-    private void setPassword(String password) { this.password = password; }
-    private void setUsername(String username) { this.username = username; }
-    private void setRequest(String request) { this.request = request; }
-
-
-
-    public boolean setCredentials(String username, String password) {
-        setUsername(username);
-        setPassword(password);
-        credentials =  new UsernamePasswordCredentials(this.username, this.password);
-        return credentials.getUserName().equals(username) && credentials.getPassword().equals(password);
-    }
-
-    public UsernamePasswordCredentials getCredentials() {
-        return credentials;
-    }
-
     @Override
-    public int saveTeam(String jsonStringWithName) throws IOException,AuthenticationException {
+    public int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException {
         ResponseHandler<String> handler = new BasicResponseHandler();
-        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0];
+        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0].replace(' ','_');
 
-        HttpPost postTeam = new HttpPost(getConnectionParams()+"/"+requestParameter);
+        HttpPost postTeam = new HttpPost(getConnectionParams(requestForSaveTeam) + "/" + requestParameter);
 
         postTeam.addHeader(new BasicScheme().authenticate(credentials, postTeam, null));
 
@@ -98,22 +64,66 @@ public class ApacheHttpClient implements HttpClient {
 
         if (response.getStatusLine().getStatusCode() == 200) {
 
-
-
-//            String tmp = handler.handleResponse(response);
-
-            StringBuilder sb= new StringBuilder();
-            try (InputStream responseStream = response.getEntity().getContent();){
+            StringBuilder sb = new StringBuilder();
+            try (InputStream responseStream = response.getEntity().getContent();) {
                 int currentByte;
-                do{
-                currentByte=responseStream.read();
-                sb.append((char)currentByte);
+                do {
+                    currentByte = responseStream.read();
+                    sb.append((char) currentByte);
                 } while (currentByte != -1);
             }
             response.close();
-            client.close();
             return Integer.parseInt(sb.toString().split(",")[0].split(":")[1]);
         }
         return -1;
     }
+
+    public void setConnectionParams(String host, String port) {
+        setHost(host);
+        setPort(port);
+        prebuiltConnectionParams = prebuiltConnectionParams = "http://" + host + ":" + port + "/";
+    }
+
+    public void setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
+        String[] s = singleLineConnectionParams.trim().split("://|:|");
+        try {
+            setConnectionParams(s[0],s[1]);
+        } catch (IndexOutOfBoundsException e){
+            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams+e.getMessage());
+        }
+    }
+
+
+    public String getConnectionParams(String request) {
+        return prebuiltConnectionParams + request;
+    }
+
+    public boolean setCredentials(String username, String password) {
+        setUsername(username);
+        setPassword(password);
+        credentials = new UsernamePasswordCredentials(this.username, this.password);
+        return credentials.getUserName().equals(username) && credentials.getPassword().equals(password);
+    }
+
+    public UsernamePasswordCredentials getCredentials() {
+        return credentials;
+    }
+
+    //Simple setters/getters
+    private void setHost(String host) {
+        this.host = host;
+    }
+
+    private void setPort(String port) {
+        this.port = port;
+    }
+
+    private void setPassword(String password) {
+        this.password = password;
+    }
+
+    private void setUsername(String username) {
+        this.username = username;
+    }
+
 }

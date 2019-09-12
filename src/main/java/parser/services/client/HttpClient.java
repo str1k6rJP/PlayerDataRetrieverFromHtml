@@ -1,6 +1,7 @@
 package parser.services.client;
 
 import org.apache.http.auth.AuthenticationException;
+import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.IOException;
 
@@ -25,5 +26,12 @@ public interface HttpClient {
      */
     int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException;
 
+    void setConnectionParams(String host, String port);
+
+    String getConnectionParams(String request);
+
+    boolean setCredentials(String username, String password);
+
+    UsernamePasswordCredentials getCredentials();
 
 }

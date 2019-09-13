@@ -1,15 +1,21 @@
 package parser.controllers;
 
+import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,9 +25,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ParserControllerTest {
 
+    public static final int STUB_PORT = 8083;
+    public static final String postAllPlayers = "http://localhost:8083/player/add", postSingleTeam = "http://localhost:8083/team/*", jsonBodyForPlayerPost = "[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"}" +
+            ",{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}]", teamSaveResponse = "{\"id\":\"1\",\"teamName\":\"Success!\"}";
+    @ClassRule
+    public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
     @Autowired
     public MockMvc mockMvc;
+    @Rule
+    public WireMockClassRule wireMockRule = wireMockRuleStat;
 
+
+    @Before
+    public void setup() {
+        stubFor(post(urlEqualTo(postAllPlayers)).withRequestBody(equalToJson(jsonBodyForPlayerPost))
+                .willReturn(aResponse()
+                        .withStatus(HttpStatus.OK.value())));
+        stubFor(
+                post(urlMatching(postSingleTeam))
+                        .willReturn(aResponse()
+                                .withStatus(HttpStatus.OK.value())
+                                .withBody(teamSaveResponse)));
+    }
 
     @Test
     public void testSetNewTeamListSite() throws Exception {
@@ -68,8 +93,7 @@ public class ParserControllerTest {
                 .post("/autofill")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"}" +
-                        ",{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}"))
+                .content(jsonBodyForPlayerPost))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

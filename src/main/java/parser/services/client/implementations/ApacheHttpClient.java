@@ -69,7 +69,7 @@ public class ApacheHttpClient implements HttpClient {
                 } while (currentByte != -1);
             }
             response.close();
-            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1]);
+            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1].replace('\"',' ').trim());
         }
         return -1;
     }

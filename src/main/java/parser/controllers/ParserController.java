@@ -15,13 +15,13 @@ public class ParserController {
 
 
     @PostMapping()
-    public boolean putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) {
-        return jsonToSave == null ? parserService
+    public String putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) {
+        return String.format("{\"is-success\":\"%s\"}",jsonToSave == null ? parserService
                 .savePlayersViaControllerAPI(parserService
                         .getPlayersInJsonFormat(parserService
                                 .getPlayersStringBySiteWithTeamList()))
                 : parserService
-                .savePlayersViaControllerAPI(jsonToSave);
+                .savePlayersViaControllerAPI(jsonToSave));
     }
 
     @PostMapping("/setLink")

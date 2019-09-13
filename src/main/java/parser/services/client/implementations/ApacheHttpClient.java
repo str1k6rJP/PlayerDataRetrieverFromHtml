@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 @Service
 public class ApacheHttpClient implements HttpClient {
-    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format http[s]://<hostname>:<port>/";
+    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
     private String host, port;
     private String username, password;
     private String requestForSaveTeam = "team", requsetForSavePlayers = "player/add";
@@ -74,8 +74,19 @@ public class ApacheHttpClient implements HttpClient {
         return -1;
     }
 
+    private final String forbiddenHostPartsRegexSet= "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
     @Override
-    public void setConnectionParams(String host, String port) {
+    public void setConnectionParams(String host, String port) throws InvalidInputError {
+        try {
+            Integer.parseInt(port);
+            if (host.matches(forbiddenHostPartsRegexSet)){
+                throw new InvalidInputError("It's ot possible for the hostname to contain any of "+forbiddenHostPartsRegexSet+" symbols");
+            };
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            throw new InvalidInputError("Wrong input for port value!! It MUSTN'T contain any symbols except digits : "
+                    +e.getMessage());
+        }
         setHost(host);
         setPort(port);
         prebuiltConnectionParams = prebuiltConnectionParams = "http://" + host + ":" + port + "/";
@@ -83,11 +94,11 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
-        String[] s = singleLineConnectionParams.trim().split("://|:|");
+        String[] s = singleLineConnectionParams.trim().split(":");
         try {
             setConnectionParams(s[0], s[1]);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams + e.getMessage());
+            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
         }
         return getConnectionParams("");
     }

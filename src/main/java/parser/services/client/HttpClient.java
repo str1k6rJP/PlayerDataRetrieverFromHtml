@@ -27,7 +27,7 @@ public interface HttpClient {
      */
     int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException;
 
-    void setConnectionParams(String host, String port);
+    void setConnectionParams(String host, String port) throws InvalidInputError;
 
     String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError;
 

@@ -1,6 +1,5 @@
+/home/dmaliovanyi/parsehttp/src/main/java/parser/services/client/HttpClient.java
+/home/dmaliovanyi/parsehttp/src/main/java/parser/controllers/ParserController.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/services/HTMLParserService.java
-/home/dmaliovanyi/parsehttp/src/main/java/parser/database/repositories/TeamRepository.java
-/home/dmaliovanyi/parsehttp/src/main/java/parser/database/tables/Player.java
-/home/dmaliovanyi/parsehttp/src/main/java/parser/database/tables/Team.java
-/home/dmaliovanyi/parsehttp/src/main/java/parser/database/repositories/PlayerRepository.java
+/home/dmaliovanyi/parsehttp/src/main/java/parser/services/client/implementations/ApacheHttpClient.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/Application.java

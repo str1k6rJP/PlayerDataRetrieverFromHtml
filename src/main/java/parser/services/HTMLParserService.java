@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import parser.Application;
+import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
@@ -178,6 +179,17 @@ public class HTMLParserService {
         return sb.toString();
     }
 
+    public String setConnectionParams(String singleLineParam) {
+        try {
+            return apacheHttpClient.setConnectionParams(singleLineParam);
+        } catch (InvalidInputError e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+
+            return "ERROR!!! Wrong parameter was wrong set!!!\nPlease try http://hostname:password or use an alternative way to set connection parameters";
+        }
+    }
+
     public String setConnectionParams(String host, String port) {
         apacheHttpClient.setConnectionParams(host, port);
         return apacheHttpClient.getConnectionParams("");
@@ -185,6 +197,20 @@ public class HTMLParserService {
 
     public UsernamePasswordCredentials setUsernamePasswordCredentials(String username, String password) {
         return apacheHttpClient.setCredentials(username, password) ? apacheHttpClient.getCredentials() : null;
+    }
+
+    public boolean savePlayersViaControllerAPI(String json) throws InvalidInputError{
+        try {
+            return apacheHttpClient.savePlayers(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new InvalidInputError("An Error occurred while passing data to data storing responsible application : "
+                    + e.getMessage() + "\n" + e.getCause());
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            throw new InvalidInputError("Wrong credentials were entered! This source can't be accessed with these username and password : "
+                    + e.getMessage() + "\n" + e.getCause());
+        }
     }
 
     /**

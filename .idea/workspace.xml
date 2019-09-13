@@ -7,16 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/parser/controllers/ParserControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/controllers/ParserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/controllers/ParserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/errors/InvalidInputError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/errors/InvalidInputError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/HttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/database/repositories/PlayerRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/database/repositories/TeamRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/database/tables/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/database/tables/Team.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Application.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,6 +67,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="parser.services" />
+      <recent name="" />
       <recent name="parser.services.client" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -85,24 +91,12 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ApacheHttpClientTest">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="spring_datasource_username" value="root" />
-        <env name="spring_datasource_password" value="root0000" />
-        <env name="spring_datasource_url" value="jdbc:mysql://172.18.0.2:3306/footballers?serverTimezone=Europe/Kiev" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="parser.Application" />
-      <module name="parsehttp" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ParserControllerTest">
     <configuration name="ApacheHttpClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parsehttp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="parser.services.client.implementations.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -113,38 +107,82 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="parsehttp-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/parsehttp-1.0-SNAPSHOT.jar" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <envs>
-        <env name="spring_datasource_url" value="jdbc:mysql://localhost:3306/footballers" />
-        <env name="spring_datasource_username" value="root" />
-        <env name="spring_datasource_password" value="root0000" />
-      </envs>
-      <method v="2" />
+    <configuration name="ApacheHttpClientTest.testSavePlayers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parsehttp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.services.client.implementations.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="parser.services.client.implementations" />
+      <option name="MAIN_CLASS_NAME" value="parser.services.client.implementations.ApacheHttpClientTest" />
+      <option name="METHOD_NAME" value="testSavePlayers" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="parsehttp.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/parsehttp_jar/parsehttp.jar" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <envs>
-        <env name="spring_datasource_url" value="jdbc:mysql://localhost:3306/footballers" />
-        <env name="spring_datasource_username" value="root" />
-        <env name="spring_datasource_password" value="root0000" />
-      </envs>
-      <method v="2" />
+    <configuration name="HtmlParserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parsehttp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="parser.services" />
+      <option name="MAIN_CLASS_NAME" value="parser.services.HtmlParserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parsehttp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="parser.controllers" />
+      <option name="MAIN_CLASS_NAME" value="parser.controllers.ParserControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserControllerTest.testSetNewTeamListSite" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="parsehttp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="parser.controllers" />
+      <option name="MAIN_CLASS_NAME" value="parser.controllers.ParserControllerTest" />
+      <option name="METHOD_NAME" value="testSetNewTeamListSite" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Application" />
-      <item itemvalue="JAR Application.parsehttp.jar" />
-      <item itemvalue="JAR Application.parsehttp-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.ApacheHttpClientTest" />
+      <item itemvalue="JUnit.ApacheHttpClientTest.testSavePlayers" />
+      <item itemvalue="JUnit.HtmlParserServiceTest" />
+      <item itemvalue="JUnit.ParserControllerTest.testSetNewTeamListSite" />
+      <item itemvalue="JUnit.ParserControllerTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ParserControllerTest" />
+        <item itemvalue="JUnit.ParserControllerTest.testSetNewTeamListSite" />
+        <item itemvalue="JUnit.HtmlParserServiceTest" />
         <item itemvalue="JUnit.ApacheHttpClientTest" />
-        <item itemvalue="Application.Application" />
-        <item itemvalue="JAR Application.parsehttp-1.0-SNAPSHOT.jar" />
-        <item itemvalue="JAR Application.parsehttp.jar" />
+        <item itemvalue="JUnit.ApacheHttpClientTest.testSavePlayers" />
       </list>
     </recent_temporary>
   </component>
@@ -264,7 +302,56 @@
       <option name="project" value="LOCAL" />
       <updated>1568199477652</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="'tests for ApacheHttpClient were completed and functionality of #saveTeam method confirmed'">
+      <created>1568202750602</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1568202750602</updated>
+    </task>
+    <task id="LOCAL-00017" summary="'added custom error'">
+      <created>1568281153945</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1568281153945</updated>
+    </task>
+    <task id="LOCAL-00018" summary="'reconstructed service classes and interface on purpose to better meet architectural requirements of other components'">
+      <created>1568281334539</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1568281334539</updated>
+    </task>
+    <task id="LOCAL-00019" summary="'some tests were modified and added to test functionality of services'">
+      <created>1568281398351</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1568281398351</updated>
+    </task>
+    <task id="LOCAL-00020" summary="'removed redundant comments from Applicatio class'">
+      <created>1568281659566</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1568281659566</updated>
+    </task>
+    <task id="LOCAL-00021" summary="'Refactored and cleaned services' code, also added necessary annotations'">
+      <created>1568281936315</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1568281936315</updated>
+    </task>
+    <task id="LOCAL-00022" summary="'added tests to HTMLParserService'">
+      <created>1568291993734</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1568291993734</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -293,15 +380,40 @@
     <MESSAGE value="'implemented some functionality in ApacheHttpClient'" />
     <MESSAGE value="'implemented some functionality in ApacheHttpClient and architecture changed a bit'" />
     <MESSAGE value="'jpa was fully removed'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'jpa was fully removed'" />
+    <MESSAGE value="'tests for ApacheHttpClient were completed and functionality of #saveTeam method confirmed'" />
+    <MESSAGE value="'added custom error'" />
+    <MESSAGE value="'reconstructed service classes and interface on purpose to better meet architectural requirements of other components'" />
+    <MESSAGE value="'some tests were modified and added to test functionality of services'" />
+    <MESSAGE value="'removed redundant comments from Applicatio class'" />
+    <MESSAGE value="'Refactored and cleaned services' code, also added necessary annotations'" />
+    <MESSAGE value="'added tests to HTMLParserService'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'added tests to HTMLParserService'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java</url>
+          <line>57</line>
+          <properties class="parser.services.client.implementations.ApacheHttpClientTest" method="testSavePlayers">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="40" />
+          <line>54</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -77,6 +77,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-standalone</artifactId>

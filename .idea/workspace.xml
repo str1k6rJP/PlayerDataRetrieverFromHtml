@@ -7,14 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/RestTemplateHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/controllers/ParserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/controllers/ParserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/parser/controllers/ParserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/controllers/ParserControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +27,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;'" />
         <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;" />
         <option value="str1k6rJP &lt;fkca.1ict18.mdv@gmail.com&gt;" />
       </list>
@@ -342,7 +338,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568360257278</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="'tests rewritten in another application independent way and wiremock added'">
+      <created>1568376005029</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1568376005029</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -379,7 +382,8 @@
     <MESSAGE value="'Refactored and cleaned services' code, also added necessary annotations'" />
     <MESSAGE value="'added tests to HTMLParserService'" />
     <MESSAGE value="'controller for application completed and controller tests completed and passed'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'controller for application completed and controller tests completed and passed'" />
+    <MESSAGE value="'tests rewritten in another application independent way and wiremock added'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'tests rewritten in another application independent way and wiremock added'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

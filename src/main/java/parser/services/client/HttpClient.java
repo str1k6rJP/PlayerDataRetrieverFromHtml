@@ -9,6 +9,9 @@ import java.io.IOException;
 public interface HttpClient {
 
     String serviceUrl = "localhost:8083/";
+    String forbiddenHostPartsRegexSet= "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
+    String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
+
 
     /**
      * Receives templates of objects to be set, returns list of <code>Player</code> which were set
@@ -47,7 +50,15 @@ public interface HttpClient {
      *
      * @see #setConnectionParams(String, String)
      */
-    String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError;
+    default String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError{
+        String[] s = singleLineConnectionParams.trim().split(":");
+        try {
+            setConnectionParams(s[0], s[1]);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
+        }
+        return getConnectionParams();
+    };
 
     /**
      * Returns <code>String</code> in form of http[s]://<host>:<port>/

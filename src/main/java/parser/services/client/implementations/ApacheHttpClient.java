@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 @Service
 public class ApacheHttpClient implements HttpClient {
-    private static final String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
+
     private String host, port;
     private String username, password;
     private String requestForSaveTeam = "team", requsetForSavePlayers = "player/add";
@@ -74,7 +74,6 @@ public class ApacheHttpClient implements HttpClient {
         return -1;
     }
 
-    private final String forbiddenHostPartsRegexSet= "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
     @Override
     public void setConnectionParams(String host, String port) throws InvalidInputError {
         try {
@@ -90,17 +89,6 @@ public class ApacheHttpClient implements HttpClient {
         setHost(host);
         setPort(port);
         prebuiltConnectionParams = prebuiltConnectionParams = "http://" + host + ":" + port + "/";
-    }
-
-    @Override
-    public String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
-        String[] s = singleLineConnectionParams.trim().split(":");
-        try {
-            setConnectionParams(s[0], s[1]);
-        } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
-        }
-        return getConnectionParams();
     }
 
     @Override

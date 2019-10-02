@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public interface HttpClient {
 
-    String forbiddenHostPartsRegexSet= "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
+    String forbiddenHostPartsRegexSet = "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
     String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
 
     /**
@@ -18,7 +18,7 @@ public interface HttpClient {
      * , would necessarily contain host name without any slashes, colons, semicolons or question marks in it
      * , then ':' and four-digit only port followed by slash. All the conditions should be held or input string won't match otherwise
      */
-    Pattern hostAndPortPattern= Pattern.compile("^(https?://)?(?<host>[^/:;?]+):(?<port>\\d{4})/");
+    Pattern hostAndPortPattern = Pattern.compile("^(https?://)?(?<host>[^/:;?]+):(?<port>\\d{4})/");
 
 
     /**
@@ -44,7 +44,6 @@ public interface HttpClient {
      * @param host host name
      * @param port port number
      * @throws InvalidInputError if input was incorrect
-     *
      * @see #setConnectionParams(String)
      */
     void setConnectionParams(String host, String port) throws InvalidInputError;
@@ -55,18 +54,19 @@ public interface HttpClient {
      * @param singleLineConnectionParams host and port
      * @return <code>String</code> templated as http[s]://<host>:<port>/
      * @throws InvalidInputError if input was incorrect
-     *
      * @see #setConnectionParams(String, String)
      */
-    default String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError{
+    default String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
         Matcher matcher = hostAndPortPattern.matcher(singleLineConnectionParams);
         try {
             setConnectionParams(matcher.group("host"), matcher.group("port"));
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
+            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams + " : " + e.getMessage());
         }
         return getConnectionParams();
-    };
+    }
+
+    ;
 
     /**
      * Returns <code>String</code> in form of http[s]://<host>:<port>/
@@ -81,7 +81,7 @@ public interface HttpClient {
      * @param request request to the applications' API
      * @return prebuilt request in full form as <code>String</code>
      */
-    default String getConnectionParams(String request){
+    default String getConnectionParams(String request) {
         return getConnectionParams() + request;
     }
 

@@ -3,7 +3,13 @@ package parser.controllers;
 
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import parser.services.HTMLParserService;
 
 @RestController
@@ -16,7 +22,7 @@ public class ParserController {
 
     @PostMapping()
     public String putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) {
-        return String.format("{\"is-success\":\"%s\"}",jsonToSave == null ? parserService
+        return String.format("{\"is-success\":\"%s\"}", jsonToSave == null ? parserService
                 .savePlayersViaControllerAPI(parserService
                         .getPlayersInJsonFormat(parserService
                                 .getPlayersStringBySiteWithTeamList()))
@@ -36,10 +42,10 @@ public class ParserController {
     }
 
     @PutMapping(value = {"/service/{var1}/{uvar2}", "/service"})
-    public String setServiceLink(@PathVariable(name = "var1",required = false) String var1
+    public String setServiceLink(@PathVariable(name = "var1", required = false) String var1
             , @PathVariable(name = "uvar2", required = false) String var2
-            , @RequestParam(name = "p",required = false) String hostColonPort) {
-        return String.format("{\"s-link\":\"%s\"}", var1==null||var2 == null ? parserService.setConnectionParams(hostColonPort) : parserService.setConnectionParams(var1, var2));
+            , @RequestParam(name = "p", required = false) String hostColonPort) {
+        return String.format("{\"s-link\":\"%s\"}", var1 == null || var2 == null ? parserService.setConnectionParams(hostColonPort) : parserService.setConnectionParams(var1, var2));
     }
 }
 

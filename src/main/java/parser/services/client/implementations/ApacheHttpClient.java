@@ -71,7 +71,7 @@ public class ApacheHttpClient implements HttpClient {
             }
             response.close();
             //retrieves id of team set to database just now
-            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1].replace('\"',' ').trim());
+            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1].replace('\"', ' ').trim());
         }
         return -1;
     }
@@ -80,13 +80,14 @@ public class ApacheHttpClient implements HttpClient {
     public void setConnectionParams(String host, String port) throws InvalidInputError {
         try {
             Integer.parseInt(port);
-            if (host.matches(forbiddenHostPartsRegexSet)){
-                throw new InvalidInputError("It's not possible for the hostname to contain any of "+forbiddenHostPartsRegexSet+" symbols");
-            };
-        } catch (NumberFormatException e){
+            if (host.matches(forbiddenHostPartsRegexSet)) {
+                throw new InvalidInputError("It's not possible for the hostname to contain any of " + forbiddenHostPartsRegexSet + " symbols");
+            }
+            ;
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             throw new InvalidInputError("Wrong input for port value!! It MUSTN'T contain any symbols except digits : "
-                    +e.getMessage());
+                    + e.getMessage());
         }
         setHost(host);
         setPort(port);

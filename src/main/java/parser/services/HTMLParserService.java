@@ -199,7 +199,7 @@ public class HTMLParserService {
         return apacheHttpClient.setCredentials(username, password) ? apacheHttpClient.getCredentials() : null;
     }
 
-    public boolean savePlayersViaControllerAPI(String json) throws InvalidInputError{
+    public boolean savePlayersViaControllerAPI(String json) throws InvalidInputError {
         try {
             return apacheHttpClient.savePlayers(json);
         } catch (IOException e) {

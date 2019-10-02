@@ -1,18 +1,18 @@
 version: '3'
 
-services: 
+services:
   parser-http-app:
     image: local/parsehttp:1.1.2
-#    networks:
-#      my-net:
-#        ipv4_address: 172.18.1.18 
+    #    networks:
+    #      my-net:
+    #        ipv4_address: 172.18.1.18
     environment:
-#      - DATABASE_HOST=docker-mysql 
-#     - DATABASE_USER=root 
-#     - DATABASE_PASSWORD=root0000 
-#     - DATABASE_NAME=footballers 
-#     - DATABASE_PORT=3306
-      - SPRING_DATASOURCE_USERNAME=root 
+      #      - DATABASE_HOST=docker-mysql
+      #     - DATABASE_USER=root
+      #     - DATABASE_PASSWORD=root0000
+      #     - DATABASE_NAME=footballers
+      #     - DATABASE_PORT=3306
+      - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root0000
       - SPRING_DATASOURCE_URL=jdbc:mysql://172.18.0.2:3306/footballers
 

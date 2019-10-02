@@ -22,7 +22,7 @@ public class ApacheHttpClient implements HttpClient {
 
     private String host, port;
     private String username, password;
-    private String requestForSaveTeam = "team", requsetForSavePlayers = "player/add";
+    private String requestForSaveTeam = "team", requestForSavePlayers = "player/add";
     private CloseableHttpClient client = HttpClients.createDefault();
     private UsernamePasswordCredentials credentials;
     private String prebuiltConnectionParams;
@@ -30,11 +30,12 @@ public class ApacheHttpClient implements HttpClient {
     @Override
     public boolean savePlayers(String jsonString) throws IOException, AuthenticationException {
 
-        HttpPost postPlayers = new HttpPost(getConnectionParams(requsetForSavePlayers));
+        HttpPost postPlayers = new HttpPost(getConnectionParams(requestForSavePlayers));
 
         postPlayers.setEntity(new StringEntity(jsonString));
         postPlayers.setHeader("Accept", "application/json");
         postPlayers.setHeader("content-type", "application/json");
+
 
         postPlayers.addHeader(new BasicScheme().authenticate(credentials, postPlayers, null));
 
@@ -69,6 +70,7 @@ public class ApacheHttpClient implements HttpClient {
                 } while (currentByte != -1);
             }
             response.close();
+            //retrieves id of team set to database just now
             return Integer.parseInt(sb.toString().split(",")[0].split(":")[1].replace('\"',' ').trim());
         }
         return -1;
@@ -79,7 +81,7 @@ public class ApacheHttpClient implements HttpClient {
         try {
             Integer.parseInt(port);
             if (host.matches(forbiddenHostPartsRegexSet)){
-                throw new InvalidInputError("It's ot possible for the hostname to contain any of "+forbiddenHostPartsRegexSet+" symbols");
+                throw new InvalidInputError("It's not possible for the hostname to contain any of "+forbiddenHostPartsRegexSet+" symbols");
             };
         } catch (NumberFormatException e){
             e.printStackTrace();
@@ -96,10 +98,6 @@ public class ApacheHttpClient implements HttpClient {
         return prebuiltConnectionParams;
     }
 
-    @Override
-    public String getConnectionParams(String request) {
-        return prebuiltConnectionParams + request;
-    }
 
     @Override
     public boolean setCredentials(String username, String password) {

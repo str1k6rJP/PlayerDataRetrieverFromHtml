@@ -5,12 +5,20 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import parser.errors.InvalidInputError;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public interface HttpClient {
 
-    String serviceUrl = "localhost:8083/";
     String forbiddenHostPartsRegexSet= "[:;/'`\\]}{)(*&?%^$@!~\\[\"\\\\\\s]";
     String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
+
+    /**
+     * This regular expression implies that received string would whether or not contain domain http:// or https://
+     * , would necessarily contain host name without any slashes, colons, semicolons or question marks in it
+     * , then ':' and four-digit only port followed by slash. All the conditions should be held or input string won't match otherwise
+     */
+    Pattern hostAndPortPattern= Pattern.compile("^(https?://)?(?<host>[^/:;?]+):(?<port>\\d{4})/");
 
 
     /**
@@ -22,11 +30,11 @@ public interface HttpClient {
     boolean savePlayers(String jsonString) throws IOException, AuthenticationException;
 
     /**
-     * Receives <code>Team</code> prefab to save in, returns entity of <code>Team</code> which was saved.
-     * If save was failed, returns an empty <code>Team</code>
+     * Receives <code>Team</code> prefab to save in, returns id of team saved
+     * If save was failed, returns -1
      *
-     * @param jsonStringWithName
-     * @return <code>Team</code>
+     * @param jsonStringWithName team entity prefab
+     * @return <code>Team.id</code> field value
      */
     int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException;
 
@@ -37,7 +45,7 @@ public interface HttpClient {
      * @param port port number
      * @throws InvalidInputError if input was incorrect
      *
-     * @see #savePlayers(String)
+     * @see #setConnectionParams(String)
      */
     void setConnectionParams(String host, String port) throws InvalidInputError;
 
@@ -51,9 +59,9 @@ public interface HttpClient {
      * @see #setConnectionParams(String, String)
      */
     default String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError{
-        String[] s = singleLineConnectionParams.trim().split(":");
+        Matcher matcher = hostAndPortPattern.matcher(singleLineConnectionParams);
         try {
-            setConnectionParams(s[0], s[1]);
+            setConnectionParams(matcher.group("host"), matcher.group("port"));
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
         }
@@ -73,7 +81,9 @@ public interface HttpClient {
      * @param request request to the applications' API
      * @return prebuilt request in full form as <code>String</code>
      */
-    String getConnectionParams(String request);
+    default String getConnectionParams(String request){
+        return getConnectionParams() + request;
+    }
 
     /**
      * Sets credentials (login and password) to define access permissions in the environment of API of application you're trying to connect to

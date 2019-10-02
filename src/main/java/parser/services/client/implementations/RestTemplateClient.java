@@ -1,31 +1,58 @@
 package parser.services.client.implementations;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.Netty4ClientHttpRequestFactory;
+import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.web.client.RestTemplate;
+import parser.beans.Player;
+import parser.beans.Team;
 import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class RestTemplateClient implements HttpClient {
-    private Pattern hostAndPortPattern= Pattern.compile("^(https?//)?(?<host>):(?<port>)");
+
     private static final String invalidInputErrorCustomAdviceMessageForConnectionParams = "\nThe input should be in format <hostname>:<port>";
     private String host, port;
     private String username, password;
-    private String requestForSaveTeam = "team", requsetForSavePlayers = "player/add";
+    private String requestForSaveTeam = "team/", requestForSavePlayers = "player/add";
     private UsernamePasswordCredentials credentials;
     private String prebuiltConnectionParams;
+    private RestTemplate template = new RestTemplate();
+    private ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+    private static final Pattern stringNamePattern = Pattern.compile("\"team_?(?i)n(?-i)ame=\"(?<teamName>[^\",]{1,50}+)\"");
+
     @Override
     public boolean savePlayers(String jsonString) throws IOException, AuthenticationException {
+
+        HttpEntity<String> playersListToSet = new HttpEntity<>(jsonString,getAuthHeader());
+        template.postForObject(prebuiltConnectionParams+requestForSavePlayers,playersListToSet,String.class);
         return false;
     }
 
     @Override
     public int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException {
-        return 0;
+
+        String teamName=stringNamePattern.matcher(jsonStringWithName).group("teamName");
+        if (teamName!=null&&teamName.length()!=0) {
+            URL url = new URL(prebuiltConnectionParams+requestForSaveTeam+teamName);
+            return template.postForObject(url.toString()
+                    ,new HttpEntity<String>("body",getAuthHeader()),Team.class).getId();
+        }
+            System.err.println(teamName + "isn't a correct team name");
+        return -1;
     }
 
     @Override
@@ -43,22 +70,12 @@ public class RestTemplateClient implements HttpClient {
         this.host=host;
         this.port=port;
 
-        prebuiltConnectionParams = prebuiltConnectionParams = "http://" + host + ":" + port + "/";
-    }
-
-    @Override
-    public String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
-        return null;
+        prebuiltConnectionParams="http://" + host + ":" + port + "/";
     }
 
     @Override
     public String getConnectionParams() {
-        return null;
-    }
-
-    @Override
-    public String getConnectionParams(String request) {
-        return null;
+        return prebuiltConnectionParams;
     }
 
     @Override
@@ -71,4 +88,11 @@ public class RestTemplateClient implements HttpClient {
     public UsernamePasswordCredentials getCredentials() {
        return credentials;
     }
+
+    private HttpHeaders getAuthHeader(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBasicAuth(credentials.getUserName(),credentials.getPassword());
+        return httpHeaders;
+    }
+
 }

@@ -27,16 +27,57 @@ public interface HttpClient {
      */
     int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException;
 
+    /**
+     * Sets host and port parameters of application responsive for database handling
+     *
+     * @param host host name
+     * @param port port number
+     * @throws InvalidInputError if input was incorrect
+     *
+     * @see #savePlayers(String)
+     */
     void setConnectionParams(String host, String port) throws InvalidInputError;
 
+    /**
+     * Does the same thing as {@link #setConnectionParams(String, String)}, but accepts parameters in form of <code><host>:<port></code>
+     *
+     * @param singleLineConnectionParams host and port
+     * @return <code>String</code> templated as http[s]://<host>:<port>/
+     * @throws InvalidInputError if input was incorrect
+     *
+     * @see #setConnectionParams(String, String)
+     */
     String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError;
 
+    /**
+     * Returns <code>String</code> in form of http[s]://<host>:<port>/
+     *
+     * @return URL prefab as <code>String</code>
+     */
     String getConnectionParams();
 
+    /**
+     * Returns result of {@link #getConnectionParams()} and appends /<request> to it
+     *
+     * @param request request to the applications' API
+     * @return prebuilt request in full form as <code>String</code>
+     */
     String getConnectionParams(String request);
 
+    /**
+     * Sets credentials (login and password) to define access permissions in the environment of API of application you're trying to connect to
+     *
+     * @param username
+     * @param password
+     * @return if credentials were set without any issues
+     */
     boolean setCredentials(String username, String password);
 
+    /**
+     * Returns credentials in form defined by {@link UsernamePasswordCredentials} from the spring boot security lib
+     *
+     * @return <code>UsernamePasswordCredentials</code>  entity stored within the implementation class in the current moment
+     */
     UsernamePasswordCredentials getCredentials();
 
 }

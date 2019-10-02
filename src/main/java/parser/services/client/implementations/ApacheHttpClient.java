@@ -100,7 +100,7 @@ public class ApacheHttpClient implements HttpClient {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams +" : "+ e.getMessage());
         }
-        return getConnectionParams("");
+        return getConnectionParams();
     }
 
     @Override

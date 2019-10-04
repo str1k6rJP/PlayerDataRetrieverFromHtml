@@ -24,8 +24,8 @@ import java.util.List;
 @Service
 public class HTMLParserService {
 
-    @Autowired
-    private HttpClient apacheHttpClient;
+
+    private HttpClient httpClient;
 
     private List<String> teamList;
 
@@ -36,6 +36,10 @@ public class HTMLParserService {
     private String linkToSiteWithTeams;
 
     private int sizeOfArrayDesiredToBeSet = 500;
+
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 
     /**
      * Returns web document by hyper reference predefined or defined by {@link #setLinkToSiteWithTeams(String)}
@@ -199,7 +203,7 @@ public class HTMLParserService {
         return apacheHttpClient.setCredentials(username, password) ? apacheHttpClient.getCredentials() : null;
     }
 
-    public boolean savePlayersViaControllerAPI(String json) throws InvalidInputError {
+    public boolean savePlayersViaControllerAPI(List<Player> players) throws InvalidInputError {
         try {
             return apacheHttpClient.savePlayers(json);
         } catch (IOException e) {

@@ -1,5 +1,6 @@
 package parser.services.client.implementations;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ResponseHandler;
@@ -11,11 +12,15 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Service;
+import parser.beans.Player;
+import parser.beans.Team;
 import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class ApacheHttpClient implements HttpClient {
@@ -28,11 +33,13 @@ public class ApacheHttpClient implements HttpClient {
     private String prebuiltConnectionParams;
 
     @Override
-    public boolean savePlayers(String jsonString) throws IOException, AuthenticationException {
-
+    public boolean savePlayers(List<Player> players) throws IOException, AuthenticationException {
+String jsonString = getInstanceInJsonFormat(players);
         HttpPost postPlayers = new HttpPost(getConnectionParams(requestForSavePlayers));
+StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
 
-        postPlayers.setEntity(new StringEntity(jsonString));
+        System.out.println(entity);
+        postPlayers.setEntity(entity);
         postPlayers.setHeader("Accept", "application/json");
         postPlayers.setHeader("content-type", "application/json");
 
@@ -43,10 +50,20 @@ public class ApacheHttpClient implements HttpClient {
 
         if (response.getStatusLine().getStatusCode() == 200) {
             response.close();
+            System.err.println(true);
             return true;
         }
+        System.err.println(false);
         return false;
     }
+
+
+    /*//TODO not yet implemented and doesn't need to be implemented
+    @Override
+    public boolean savePlayers(List<Player> jsonString) throws IOException, AuthenticationException {
+        System.err.println(false);
+        return false;
+    }*/
 
     @Override
     public int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException {
@@ -70,8 +87,9 @@ public class ApacheHttpClient implements HttpClient {
                 } while (currentByte != -1);
             }
             response.close();
+            Team team = new ObjectMapper().readValue(sb.toString(),Team.class);
             //retrieves id of team set to database just now
-            return Integer.parseInt(sb.toString().split(",")[0].split(":")[1].replace('\"', ' ').trim());
+            return team.getId();
         }
         return -1;
     }
@@ -129,5 +147,7 @@ public class ApacheHttpClient implements HttpClient {
     private void setUsername(String username) {
         this.username = username;
     }
+
+
 
 }

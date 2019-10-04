@@ -1,0 +1,10 @@
+server:
+  port: 8090
+http-client:
+  type: httpClientRestTemplate
+  port: 8083
+  login:
+    username: str1k6r
+    password: that'sME
+html-parser:
+  default-link: https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain

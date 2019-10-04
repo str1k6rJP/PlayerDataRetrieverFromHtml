@@ -1,10 +1,14 @@
 package parser.services.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import parser.beans.Player;
 import parser.errors.InvalidInputError;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +22,7 @@ public interface HttpClient {
      * , would necessarily contain host name without any slashes, colons, semicolons or question marks in it
      * , then ':' and four-digit only port followed by slash. All the conditions should be held or input string won't match otherwise
      */
-    Pattern hostAndPortPattern = Pattern.compile("^(https?://)?(?<host>[^/:;?]+):(?<port>\\d{4})/");
+    Pattern hostAndPortPattern = Pattern.compile("^(https?://)?(?<host>[^/:?]+):(?<port>\\d{4})/?");
 
 
     /**
@@ -27,7 +31,9 @@ public interface HttpClient {
      * @param jsonString
      * @return <code>boolean</code>
      */
-    boolean savePlayers(String jsonString) throws IOException, AuthenticationException;
+    //boolean savePlayers(String  jsonString) throws IOException, AuthenticationException;
+
+    boolean savePlayers(List<Player> jsonString) throws IOException, AuthenticationException;
 
     /**
      * Receives <code>Team</code> prefab to save in, returns id of team saved
@@ -58,15 +64,16 @@ public interface HttpClient {
      */
     default String setConnectionParams(String singleLineConnectionParams) throws InvalidInputError {
         Matcher matcher = hostAndPortPattern.matcher(singleLineConnectionParams);
-        try {
+        if (matcher.find()) {
+            System.out.println(matcher.group("host"));
+            System.out.println(matcher.group("port"));
             setConnectionParams(matcher.group("host"), matcher.group("port"));
-        } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputError(invalidInputErrorCustomAdviceMessageForConnectionParams + " : " + e.getMessage());
+            return getConnectionParams();
+        } else {
+            throw new InvalidInputError(singleLineConnectionParams + "isn't valid input");
         }
-        return getConnectionParams();
     }
 
-    ;
 
     /**
      * Returns <code>String</code> in form of http[s]://<host>:<port>/
@@ -100,5 +107,9 @@ public interface HttpClient {
      * @return <code>UsernamePasswordCredentials</code>  entity stored within the implementation class in the current moment
      */
     UsernamePasswordCredentials getCredentials();
+
+    default  <T> String getInstanceInJsonFormat(T instance) throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(instance);
+    }
 
 }

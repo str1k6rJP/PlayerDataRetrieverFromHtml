@@ -1,8 +1,12 @@
 package parser.controllers;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,24 +14,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import parser.beans.Player;
 import parser.services.HTMLParserService;
 
+import java.io.IOException;
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/autofill")
 public class ParserController {
 
     @Autowired
+    @Qualifier("configuredHtmlParserService")
     private HTMLParserService parserService;
 
 
     @PostMapping()
-    public String putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) {
+    public String putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) throws IOException {
         return String.format("{\"is-success\":\"%s\"}", jsonToSave == null ? parserService
-                .savePlayersViaControllerAPI(parserService
-                        .getPlayersInJsonFormat(parserService
-                                .getPlayersStringBySiteWithTeamList()))
+                .savePlayersViaControllerAPI(
+                                parserService.getPlayersStringBySiteWithTeamList())
                 : parserService
-                .savePlayersViaControllerAPI(jsonToSave));
+                .savePlayersViaControllerAPI(new ObjectMapper().readValue(jsonToSave, new TypeReference<List<Player>>(){})));
     }
 
     @PostMapping("/setLink")
@@ -41,11 +50,14 @@ public class ParserController {
         return String.format("{\"username\":\"%s\",\"password\":\"%s\"}", credentials.getUserName(), credentials.getPassword());
     }
 
-    @PutMapping(value = {"/service/{var1}/{uvar2}", "/service"})
+    @PutMapping(value = {"/service", "/service/{var1}/{uvar2}"})
     public String setServiceLink(@PathVariable(name = "var1", required = false) String var1
             , @PathVariable(name = "uvar2", required = false) String var2
             , @RequestParam(name = "p", required = false) String hostColonPort) {
-        return String.format("{\"s-link\":\"%s\"}", var1 == null || var2 == null ? parserService.setConnectionParams(hostColonPort) : parserService.setConnectionParams(var1, var2));
+        if (var1 == null || var2 == null) {
+            return String.format("{\"s-link\":\"%s\"}", parserService.setConnectionParams(hostColonPort));
+        }
+        return String.format("{\"s-link\":\"%s\"}", parserService.setConnectionParams(var1, var2));
     }
 }
 

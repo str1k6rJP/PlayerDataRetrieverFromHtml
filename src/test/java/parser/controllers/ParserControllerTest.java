@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import parser.services.client.ClientTest;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ParserControllerTest {
 
     public static final int STUB_PORT = 8083;
-    public static final String postAllPlayers = "http://localhost:8083/player/add", postSingleTeam = "http://localhost:8083/team/*", jsonBodyForPlayerPost = "[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"}" +
+    public static final String postAllPlayers = "/player/add", postSingleTeam = "http://localhost:8083/team/*", jsonBodyForPlayerPost = "[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"}" +
             ",{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}]", teamSaveResponse = "{\"id\":\"1\",\"teamName\":\"Success!\"}";
     @ClassRule
     public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
@@ -43,7 +44,7 @@ public class ParserControllerTest {
 
     @Before
     public void setup() {
-        stubFor(post(urlEqualTo(postAllPlayers)).withRequestBody(equalToJson(jsonBodyForPlayerPost))
+        stubFor(post(urlEqualTo(postAllPlayers)).withRequestBody(equalToJson(ClientTest.jsonPlayers))
                 .willReturn(aResponse()
                         .withStatus(HttpStatus.OK.value())));
         stubFor(
@@ -94,11 +95,12 @@ public class ParserControllerTest {
 
     @Test
     public void testPutPlayersToAppViaAPI() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/autofill")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonBodyForPlayerPost))
+                .content(ClientTest.jsonPlayers))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

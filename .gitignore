@@ -1,3 +1,5 @@
+*
+
 out
 
 .idea
@@ -11,3 +13,11 @@ hs_err_pid29308.log
 htmlside
 
 parsehttp.iml
+
+!src
+
+!dockerfile
+
+!docker-compose
+
+!pom.xml

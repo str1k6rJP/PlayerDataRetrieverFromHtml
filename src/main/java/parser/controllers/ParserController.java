@@ -51,14 +51,10 @@ public class ParserController {
         return String.format("{\"username\":\"%s\",\"password\":\"%s\"}", credentials.getUserName(), credentials.getPassword());
     }
 
-    @PutMapping(value = {"/service", "/service/{var1}/{uvar2}"})
-    public String setServiceLink(@PathVariable(name = "var1", required = false) String var1
-            , @PathVariable(name = "uvar2", required = false) String var2
-            , @RequestParam(name = "p", required = false) String hostColonPort) {
-        if (var1 == null || var2 == null) {
-            return String.format("{\"s-link\":\"%s\"}", parserService.setConnectionParams(hostColonPort));
-        }
-        return String.format("{\"s-link\":\"%s\"}", parserService.setConnectionParams(var1, var2));
+    @PutMapping(value = {"/service/{host}/{port}"})
+    public String setServiceLink(@PathVariable(name = "host", required = false) String host
+            , @PathVariable(name = "port", required = false) String port) {
+        return String.format("{\"s-link\":\"%s\"}", parserService.setConnectionParams(host, port));
     }
 }
 

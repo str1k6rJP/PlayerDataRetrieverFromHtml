@@ -9,20 +9,7 @@
     <list default="true" id="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" name="add restTemplate" comment="completed integration and compatibility with RestTemplate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <list id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="'restTemplate dependency added and RestTemplateHttpClient created'">
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/RestTemplateHttpClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="'restTemplate dependency added and RestTemplateHttpClient created'" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +35,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="4f1d59d46c38426bd1870184aaadc1059b3ae6a6" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -172,11 +159,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in parsehttp" />
-        <item itemvalue="Application.Application" />
         <item itemvalue="JUnit.RestTemplateClientTest" />
         <item itemvalue="JUnit.ApacheHttpClientTest" />
-        <item itemvalue="JUnit.ApacheHttpClientTest" />
+        <item itemvalue="JUnit.HtmlParserServiceTest" />
+        <item itemvalue="JUnit.All in parsehttp" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>

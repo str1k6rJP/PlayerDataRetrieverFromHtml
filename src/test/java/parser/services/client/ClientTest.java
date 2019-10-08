@@ -42,8 +42,7 @@ public abstract class ClientTest {
             "  \"role\" : \"hz\",\n" +
             "  \"teamId\" : 1,\n" +
             "  \"id\" : 0\n" +
-            "} ]"
-            ;
+            "} ]";
     @ClassRule
     public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
     @Rule
@@ -102,7 +101,8 @@ public abstract class ClientTest {
     @Test
     public void testSavePlayers() throws Exception {
         getHttpClient().setConnectionParams(host, port);
-        assert getHttpClient().savePlayers(new ObjectMapper().readValue(jsonPlayersString,new TypeReference<List<Player>>(){}));
+        assert getHttpClient().savePlayers(new ObjectMapper().readValue(jsonPlayersString, new TypeReference<List<Player>>() {
+        }));
     }
 
 

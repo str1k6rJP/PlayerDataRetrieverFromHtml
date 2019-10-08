@@ -72,7 +72,7 @@ public class HtmlParserServiceTest {
 
     @Test
     public void testJsonResult() throws Exception {
-        System.out.println(parserService.getPlayersInJsonFormat(parserService.getPlayersStringBySiteWithTeamList()));
+        System.out.println(parserService.getPlayersStringBySiteWithTeamList());
 
     }
 

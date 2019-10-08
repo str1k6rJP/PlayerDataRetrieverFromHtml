@@ -1,5 +1,7 @@
 package parser.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jsoup.Jsoup;
@@ -7,10 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import parser.Application;
 import parser.beans.Player;
 import parser.beans.Team;
 import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
+import parser.services.client.implementations.AbstractHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +26,11 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service
+@Slf4j
 public class HTMLParserService {
 
 
-    private HttpClient httpClient;
+    private AbstractHttpClient httpClient;
 
     private List<String> teamList;
 
@@ -37,7 +42,7 @@ public class HTMLParserService {
 
     private int sizeOfArrayDesiredToBeSet = 500;
 
-    public void setHttpClient(HttpClient httpClient) {
+    public void setHttpClient(AbstractHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -85,7 +90,8 @@ public class HTMLParserService {
                 continue;
             }
 
-            String[] playersFirstTablePart = null, playersSecondTablePart = null;
+            String[] playersFirstTablePart = null;
+            String[] playersSecondTablePart = null;
             try {
                 String[] playersTable
                         = Jsoup.connect(String.format("https://en.wikipedia.org%s", row.toString().split("\\n+")[1].split(">")[1].split("\"")[1]))
@@ -101,25 +107,23 @@ public class HTMLParserService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int currentTeamId;
+            Team currentTeam;
 
             try {
-                String teamJson = httpClient.getInstanceInJsonFormat(new Team(row.toString().split("title=\"")[1].split("\"")[0]));
+                currentTeam = new Team(row.toString().split("title=\"")[1].split("\"")[0]);
 
-//teamJson = teamJson
-//        .split("[\"{,:}]++")[2];
-                currentTeamId = httpClient.saveTeam(teamJson);
-                System.out.println(teamJson.replaceAll("\"?id\"?:\"?0\"?", "id:" + currentTeamId));
+                currentTeam.setId(httpClient.saveTeam(currentTeam));
+                log.info(String.format("Team instance %s was successfully saved to db",currentTeam.toString()));
             } catch (AuthenticationException e) {
-                System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
-                e.printStackTrace();
+                log.error("Credentials weren't set correctly!!\nPlease reset credentials!",e.getMessage(), e);
                 break;
             } catch (IOException e) {
-                System.err.println("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop.");
+                log.error("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop."
+                , e.getMessage(), e);
                 continue;
             }
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeam.getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeam.getId()));
 
         }
         lastURLToTeamList = linkToSiteWithTeams;
@@ -184,24 +188,16 @@ public class HTMLParserService {
         return (playerLayouts);
     }
 
-    public String setConnectionParams(String singleLineParam) {
-        try {
-            return httpClient.setConnectionParams(singleLineParam);
-        } catch (InvalidInputError e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-
-            return "ERROR!!! Wrong parameter was wrong set!!!\nPlease try http://hostname:password or use an alternative way to set connection parameters";
-        }
-    }
-
     public String setConnectionParams(String host, String port) {
-        httpClient.setConnectionParams(host, port);
-        return httpClient.getConnectionParams("");
+        if (httpClient.setInitialConnPath(host,port)) {
+            return httpClient.getInitialConnectionPath().toString();
+        }
+        return null;
     }
 
-    public UsernamePasswordCredentials setUsernamePasswordCredentials(String username, String password) {
-        return httpClient.setCredentials(username, password) ? httpClient.getCredentials() : null;
+    public String setUsernamePasswordCredentials(String username, String password) {
+        httpClient.setCredentials(username,password);
+        return String.format("Username: %s ;\nPassword: %s", httpClient.getUsername(),httpClient.getPassword());
     }
 
     public boolean savePlayersViaControllerAPI(List<Player> players) throws InvalidInputError {

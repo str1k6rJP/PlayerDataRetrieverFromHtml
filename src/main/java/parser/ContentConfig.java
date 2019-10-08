@@ -26,18 +26,15 @@ public class ContentConfig {
     @NotNull
     @Value("${http-client.port:8080}")
     public Integer port;
-
-    @NotNull
-    @Value("${http-client.login.username:user}")
-    private String username;
-
-    @NotNull
-    @Value("${http-client.login.password:user}")
-    private String password;
-
     @Nullable
     @Value("${html-parser.default-link}")
     public String defaultLink;
+    @NotNull
+    @Value("${http-client.login.username:user}")
+    private String username;
+    @NotNull
+    @Value("${http-client.login.password:user}")
+    private String password;
 
     @Bean(name = "httpClientApache")
     public HttpClient httpClientApache() {

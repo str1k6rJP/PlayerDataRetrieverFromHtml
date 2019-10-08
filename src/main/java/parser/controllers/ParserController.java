@@ -4,7 +4,6 @@ package parser.controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,8 +46,7 @@ public class ParserController {
 
     @PutMapping("/log-as/{username}/{password}")
     public String setCurrentUserCredentials(@PathVariable(name = "username") String userName, @PathVariable(name = "password") String password) {
-        UsernamePasswordCredentials credentials = parserService.setUsernamePasswordCredentials(userName, password);
-        return String.format("{\"username\":\"%s\",\"password\":\"%s\"}", credentials.getUserName(), credentials.getPassword());
+        return parserService.setUsernamePasswordCredentials(userName, password);
     }
 
     @PutMapping(value = {"/service/{host}/{port}"})

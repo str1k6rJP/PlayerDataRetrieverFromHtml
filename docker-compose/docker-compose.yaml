@@ -3,18 +3,27 @@ version: '3'
 services:
   parser-http-app:
     image: local/parsehttp:1.1.2
+    ports:
+      - 8085:8080
+    container_name: httpParser
+
+
+
+    #    server:
+#      port: 8085
+#    http-client:
+#      type: httpClientApache
+#      port: 8083
+#      login:
+#        username: str1k6r
+#        password: that'sME
+#    html-parser:
+#      default-link: https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain
+
     #    networks:
     #      my-net:
     #        ipv4_address: 172.18.1.18
-    environment:
-      #      - DATABASE_HOST=docker-mysql
-      #     - DATABASE_USER=root
-      #     - DATABASE_PASSWORD=root0000
-      #     - DATABASE_NAME=footballers
-      #     - DATABASE_PORT=3306
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root0000
-      - SPRING_DATASOURCE_URL=jdbc:mysql://172.18.0.2:3306/footballers
+
 
 #networks:
 # my-net:

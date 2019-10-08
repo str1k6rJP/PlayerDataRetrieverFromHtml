@@ -6,10 +6,26 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/RestTemplateHttpClient.java" afterDir="false" />
+    <list default="true" id="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" name="add restTemplate" comment="completed integration and compatibility with RestTemplate">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+    </list>
+    <list id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="'restTemplate dependency added and RestTemplateHttpClient created'">
+      <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Team.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/RestTemplateHttpClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/parser/services/HtmlParserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/services/HTMLParserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +43,9 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;'" />
+        <option value="Dmyro Maliovanyi &lt;dmytro.maliovanyi@gmail.com&gt;" />
         <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;" />
+        <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;'" />
         <option value="str1k6rJP &lt;fkca.1ict18.mdv@gmail.com&gt;" />
       </list>
     </option>
@@ -38,6 +55,51 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/pom.xml">
+      <ranges>
+        <range start1="7" end1="8" start2="7" end2="8" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="51" end1="52" start2="51" end2="51" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
+        <range start1="85" end1="85" start2="84" end2="90" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/.idea/workspace.xml">
+      <ranges>
+        <range start1="8" end1="10" start2="8" end2="17" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="12" end1="12" start2="19" end2="28" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="29" end1="30" start2="45" end2="46" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="31" end1="31" start2="47" end2="48" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="40" end1="40" start2="57" end2="98" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="52" end1="53" start2="110" end2="111" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="58" end1="58" start2="116" end2="119" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="59" end1="59" start2="120" end2="121" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="61" end1="62" start2="123" end2="123" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="67" end1="70" start2="128" end2="128" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="83" end1="93" start2="141" end2="144" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="96" end1="97" start2="147" end2="148" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="100" end1="103" start2="151" end2="159" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="107" end1="108" start2="163" end2="164" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="111" end1="112" start2="167" end2="168" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="117" end1="119" start2="173" end2="174" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="123" end1="124" start2="178" end2="179" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="127" end1="128" start2="182" end2="183" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="132" end1="133" start2="187" end2="190" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="137" end1="138" start2="194" end2="195" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="146" end1="147" start2="203" end2="205" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="152" end1="152" start2="210" end2="211" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="153" end1="154" start2="212" end2="213" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="155" end1="157" start2="214" end2="215" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="160" end1="162" start2="218" end2="221" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="163" end1="165" start2="222" end2="223" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="172" end1="173" start2="230" end2="231" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="177" end1="178" start2="235" end2="236" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="347" end1="348" start2="405" end2="478" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
+        <range start1="364" end1="367" start2="494" end2="494" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
+        <range start1="385" end1="386" start2="512" end2="520" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
+        <range start1="391" end1="394" start2="525" end2="548" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
+      </ranges>
+    </file>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -50,23 +112,23 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../DataBaseResponsibleWebApp" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="parser.services.client" />
       <recent name="parser.services" />
       <recent name="" />
-      <recent name="parser.services.client" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -81,7 +143,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.parser.services in parsehttp">
+  <component name="RunManager" selected="JUnit.All in parsehttp">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="parser.Application" />
+      <module name="parsehttp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in parsehttp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parsehttp" />
       <option name="PACKAGE_NAME" value="" />
@@ -94,7 +169,7 @@
       <module name="parsehttp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="parser.services.client.implementations.*" />
+          <option name="PATTERN" value="parser.services.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -105,37 +180,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ApacheHttpClientTest.testSaveTeam" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HtmlParserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parsehttp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="parser.services.client.implementations.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="parser.services.client.implementations" />
-      <option name="MAIN_CLASS_NAME" value="parser.services.client.implementations.ApacheHttpClientTest" />
-      <option name="METHOD_NAME" value="testSaveTeam" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="parser.services in parsehttp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="parsehttp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="parser.services.*" />
+          <option name="PATTERN" value="parser.services.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="parser.services" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="MAIN_CLASS_NAME" value="parser.services.HtmlParserServiceTest" />
+      <option name="METHOD_NAME" value="testJsonResult" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="parser.services.client.implementations in parsehttp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RestTemplateClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="parsehttp" />
       <extension name="coverage">
         <pattern>
@@ -144,25 +205,26 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="parser.services.client.implementations" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="MAIN_CLASS_NAME" value="parser.services.client.implementations.RestTemplateClientTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.Application" />
       <item itemvalue="JUnit.All in parsehttp" />
-      <item itemvalue="JUnit.ApacheHttpClientTest.testSaveTeam" />
+      <item itemvalue="JUnit.HtmlParserServiceTest" />
       <item itemvalue="JUnit.ApacheHttpClientTest" />
-      <item itemvalue="JUnit.parser.services.client.implementations in parsehttp" />
-      <item itemvalue="JUnit.parser.services in parsehttp" />
+      <item itemvalue="JUnit.RestTemplateClientTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.parser.services in parsehttp" />
-        <item itemvalue="JUnit.parser.services.client.implementations in parsehttp" />
-        <item itemvalue="JUnit.ApacheHttpClientTest" />
         <item itemvalue="JUnit.All in parsehttp" />
-        <item itemvalue="JUnit.ApacheHttpClientTest.testSaveTeam" />
+        <item itemvalue="Application.Application" />
+        <item itemvalue="JUnit.RestTemplateClientTest" />
+        <item itemvalue="JUnit.ApacheHttpClientTest" />
+        <item itemvalue="JUnit.ApacheHttpClientTest" />
       </list>
     </recent_temporary>
   </component>
@@ -170,12 +232,12 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
+    <task id="Default" summary="Default task">
       <changelist id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="" />
       <created>1567424257613</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1567424257613</updated>
+      <updated>1570005153553</updated>
     </task>
     <task id="LOCAL-00001" summary="'added plugin for building spring-boot fat jar and added consoleWriterMode parameter'">
       <created>1567749315194</created>
@@ -345,7 +407,79 @@
       <option name="project" value="LOCAL" />
       <updated>1568376005029</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="'restTemplate dependency added and RestTemplateHttpClient created'">
+      <created>1568705986801</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1568705986801</updated>
+    </task>
+    <task active="true" id="LOCAL-00026" summary="add restTemplate">
+      <changelist id="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" name="add restTemplate" comment="" />
+      <created>1570005141312</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1570005153589</updated>
+    </task>
+    <task id="LOCAL-00027" summary="added documentation to the HttpClient service interface and created new empty class for implementation its' functionality by means of RestTemplate API">
+      <created>1570010215560</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1570010215560</updated>
+    </task>
+    <task id="LOCAL-00028" summary="setConnectionParams(String) converted from inside-class implementation to default (inside-interface)">
+      <created>1570011632787</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1570011632787</updated>
+    </task>
+    <task id="LOCAL-00029" summary="RestTemplate methods implemented(not tested yet">
+      <created>1570026583928</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1570026583928</updated>
+    </task>
+    <task id="LOCAL-00030" summary="project code reformatted and @Service annotation to RestTemplateClient">
+      <created>1570026667320</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1570026667320</updated>
+    </task>
+    <task id="LOCAL-00031" summary="completed integration and compatibility with RestTemplate">
+      <created>1570173148286</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1570173148286</updated>
+    </task>
+    <task id="LOCAL-00032" summary="completed integration and compatibility with RestTemplate">
+      <created>1570461697024</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1570461697024</updated>
+    </task>
+    <task id="LOCAL-00033" summary="completed integration and compatibility with RestTemplate">
+      <created>1570461752794</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1570461752794</updated>
+    </task>
+    <task id="LOCAL-00034" summary="completed integration and compatibility with RestTemplate">
+      <created>1570510278201</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1570510278201</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
+    <option name="createBranch" value="false" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -362,9 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="'added plugin for building spring-boot fat jar and added consoleWriterMode parameter'" />
-    <MESSAGE value="'updated fat jar snapshot to actual code version'" />
-    <MESSAGE value="'corrected some errors and bugs and also provided availability not to set argument'" />
     <MESSAGE value="'added javadoc'" />
     <MESSAGE value="'advanced stucture and added dockerfile and docker-plugin'" />
     <MESSAGE value="'now adds teams to database!'" />
@@ -383,15 +514,42 @@
     <MESSAGE value="'added tests to HTMLParserService'" />
     <MESSAGE value="'controller for application completed and controller tests completed and passed'" />
     <MESSAGE value="'tests rewritten in another application independent way and wiremock added'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'tests rewritten in another application independent way and wiremock added'" />
+    <MESSAGE value="'restTemplate dependency added and RestTemplateHttpClient created'" />
+    <MESSAGE value="added documentation to the HttpClient service interface and created new empty class for implementation its' functionality by means of RestTemplate API" />
+    <MESSAGE value="setConnectionParams(String) converted from inside-class implementation to default (inside-interface)" />
+    <MESSAGE value="RestTemplate methods implemented(not tested yet" />
+    <MESSAGE value="project code reformatted and @Service annotation to RestTemplateClient" />
+    <MESSAGE value="test classes added and many config issues fixed; RestTemplate architecture changed a bit" />
+    <MESSAGE value="completed integration and compatibility with RestTemplate" />
+    <option name="LAST_COMMIT_MESSAGE" value="completed integration and compatibility with RestTemplate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="50" />
+          <url>file://$PROJECT_DIR$/src/test/java/parser/services/client/ClientTest.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

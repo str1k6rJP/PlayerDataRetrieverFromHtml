@@ -8,14 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" name="add restTemplate" comment="completed integration and compatibility with RestTemplate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <list id="7734a3d6-ed73-4101-bd73-4d52902ffc84" name="Default Changelist" comment="'restTemplate dependency added and RestTemplateHttpClient created'">
       <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Player.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/parser/beans/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/HTMLParserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/services/client/implementations/ApacheHttpClient.java" afterDir="false" />
@@ -43,6 +39,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Dmytro Maliovanyi &lt;dmytro.maliovanyi@gmail.com&gt;" />
         <option value="Dmyro Maliovanyi &lt;dmytro.maliovanyi@gmail.com&gt;" />
         <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;" />
         <option value="Dmytro Maliovanyi &lt;str1k6r2001@gmail.com&gt;'" />
@@ -55,51 +52,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/pom.xml">
-      <ranges>
-        <range start1="7" end1="8" start2="7" end2="8" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="51" end1="52" start2="51" end2="51" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
-        <range start1="85" end1="85" start2="84" end2="90" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="8" end1="10" start2="8" end2="17" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="12" end1="12" start2="19" end2="28" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="29" end1="30" start2="45" end2="46" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="31" end1="31" start2="47" end2="48" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="40" end1="40" start2="57" end2="98" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="52" end1="53" start2="110" end2="111" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="58" end1="58" start2="116" end2="119" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="59" end1="59" start2="120" end2="121" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="61" end1="62" start2="123" end2="123" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="67" end1="70" start2="128" end2="128" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="83" end1="93" start2="141" end2="144" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="96" end1="97" start2="147" end2="148" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="100" end1="103" start2="151" end2="159" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="107" end1="108" start2="163" end2="164" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="111" end1="112" start2="167" end2="168" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="117" end1="119" start2="173" end2="174" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="123" end1="124" start2="178" end2="179" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="127" end1="128" start2="182" end2="183" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="132" end1="133" start2="187" end2="190" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="137" end1="138" start2="194" end2="195" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="146" end1="147" start2="203" end2="205" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="152" end1="152" start2="210" end2="211" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="153" end1="154" start2="212" end2="213" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="155" end1="157" start2="214" end2="215" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="160" end1="162" start2="218" end2="221" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="163" end1="165" start2="222" end2="223" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="172" end1="173" start2="230" end2="231" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="177" end1="178" start2="235" end2="236" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="347" end1="348" start2="405" end2="478" changelist="f06a1beb-d1b6-4a29-be51-41ef3bc9f7ee" />
-        <range start1="364" end1="367" start2="494" end2="494" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
-        <range start1="385" end1="386" start2="512" end2="520" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
-        <range start1="391" end1="394" start2="525" end2="548" changelist="7734a3d6-ed73-4101-bd73-4d52902ffc84" />
-      </ranges>
-    </file>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -478,9 +430,40 @@
       <option name="project" value="LOCAL" />
       <updated>1570510278201</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="completed integration and compatibility with RestTemplate">
+      <created>1570511334791</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1570511334791</updated>
+    </task>
+    <task id="LOCAL-00036" summary="completed integration and compatibility with RestTemplate">
+      <created>1570511430485</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1570511430485</updated>
+    </task>
+    <task id="LOCAL-00037" summary="gitignore">
+      <created>1570511583835</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1570511583835</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <option name="createBranch" value="false" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -496,7 +479,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="'added javadoc'" />
     <MESSAGE value="'advanced stucture and added dockerfile and docker-plugin'" />
     <MESSAGE value="'now adds teams to database!'" />
     <MESSAGE value="'project sructure changed'" />
@@ -521,7 +503,8 @@
     <MESSAGE value="project code reformatted and @Service annotation to RestTemplateClient" />
     <MESSAGE value="test classes added and many config issues fixed; RestTemplate architecture changed a bit" />
     <MESSAGE value="completed integration and compatibility with RestTemplate" />
-    <option name="LAST_COMMIT_MESSAGE" value="completed integration and compatibility with RestTemplate" />
+    <MESSAGE value="gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

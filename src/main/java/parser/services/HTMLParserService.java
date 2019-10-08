@@ -1,14 +1,16 @@
 package parser.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import parser.Application;
+import parser.beans.Player;
+import parser.beans.Team;
 import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
@@ -68,7 +70,7 @@ public class HTMLParserService {
      *
      * @return list of players retrieved from the web document
      */
-    public List<String> getPlayersStringBySiteWithTeamList() {
+    public List<Player> getPlayersStringBySiteWithTeamList() {
         if (teamList == null) {
             teamList = new ArrayList<>(sizeOfArrayDesiredToBeSet);
         }
@@ -81,7 +83,7 @@ public class HTMLParserService {
             System.out.println("Html rows with team names specification");
             System.out.println(rows);
         }
-        List<String> playerStrings = new LinkedList<>();
+        List<Player> players = new LinkedList<>();
 
         for (Element row : rows) {
             if (row.toString().contains("<th>")) {
@@ -105,8 +107,14 @@ public class HTMLParserService {
                 e.printStackTrace();
             }
             int currentTeamId;
+
             try {
-                currentTeamId = apacheHttpClient.saveTeam("{teamName:" + row.toString().split("title=\"")[1].split("\"")[0] + "}");
+                String teamJson = httpClient.getInstanceInJsonFormat(new Team(row.toString().split("title=\"")[1].split("\"")[0]));
+
+//teamJson = teamJson
+//        .split("[\"{,:}]++")[2];
+                currentTeamId = httpClient.saveTeam(teamJson);
+                System.out.println(teamJson.replaceAll("\"?id\"?:\"?0\"?","id:"+currentTeamId));
             } catch (AuthenticationException e) {
                 System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
                 e.printStackTrace();
@@ -115,12 +123,12 @@ public class HTMLParserService {
                 System.err.println("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop.");
                 continue;
             }
-            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
-            playerStrings.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeamId));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeamId));
 
         }
         lastURLToTeamList = linkToSiteWithTeams;
-        return playerStrings;
+        return players;
     }
 
     /**
@@ -131,12 +139,12 @@ public class HTMLParserService {
      * @param currentTeamId id retrieved from current team set into database
      * @return convenient layouts for <code>Player</code> entities creation
      */
-    private List<String> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows, int currentTeamId) {
+    private List<Player> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows, int currentTeamId) {
         int arrayLength = htmlTableRows.length / 4;
-        List<String> playerNameAndRoleRows = new ArrayList<>(arrayLength);
+        List<Player> playerNameAndRoleRows = new ArrayList<>(arrayLength);
         int requiredRowsCounter = 1, playerIndex = 0;
-        String temp = "";
-
+        String role = "";
+        String surname = "";
         for (String htmlRow : htmlTableRows) {
             if (playerIndex >= arrayLength) {
                 break;
@@ -146,13 +154,12 @@ public class HTMLParserService {
                 default:
                     break;
                 case 4:
-                    temp = htmlRow.split("title=\"")[1].split("[\"(]")[0] + "::";
+                    role = htmlRow.split("title=\"")[1].split("[\"(]")[0];
                     break;
                 case 5:
-                    temp += htmlRow.split("title=\"")[1].split("[\"(]")[0];
-                    temp += "::" + currentTeamId;
-                    playerNameAndRoleRows.add(temp);
-                    temp = "";
+                    surname = htmlRow.split("title=\"")[1].split("[\"(]")[0];
+
+                    playerNameAndRoleRows.add(new Player(surname, role, currentTeamId));
                     requiredRowsCounter = 1;
                     playerIndex++;
                     break;
@@ -167,10 +174,9 @@ public class HTMLParserService {
      * @param playerLayouts list of all the player string layouts
      * @return JSON string
      */
-    public String getPlayersInJsonFormat(List<String> playerLayouts) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append('[');
+    public List<Player> getPlayersInJsonFormat(List<Player> playerLayouts) {
+        //StringBuilder sb = new StringBuilder();
+/*        sb.append('[');
         for (String playerLayout : playerLayouts
         ) {
             String[] values = playerLayout.split("::");
@@ -179,13 +185,13 @@ public class HTMLParserService {
         if (sb.charAt(sb.length() - 1) == ',') {
             sb.deleteCharAt(sb.length() - 1);
         }
-        sb.append(']');
-        return sb.toString();
+        sb.append(']');*/
+            return (playerLayouts);
     }
 
     public String setConnectionParams(String singleLineParam) {
         try {
-            return apacheHttpClient.setConnectionParams(singleLineParam);
+            return httpClient.setConnectionParams(singleLineParam);
         } catch (InvalidInputError e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -195,17 +201,17 @@ public class HTMLParserService {
     }
 
     public String setConnectionParams(String host, String port) {
-        apacheHttpClient.setConnectionParams(host, port);
-        return apacheHttpClient.getConnectionParams("");
+        httpClient.setConnectionParams(host, port);
+        return httpClient.getConnectionParams("");
     }
 
     public UsernamePasswordCredentials setUsernamePasswordCredentials(String username, String password) {
-        return apacheHttpClient.setCredentials(username, password) ? apacheHttpClient.getCredentials() : null;
+        return httpClient.setCredentials(username, password) ? httpClient.getCredentials() : null;
     }
 
     public boolean savePlayersViaControllerAPI(List<Player> players) throws InvalidInputError {
         try {
-            return apacheHttpClient.savePlayers(json);
+            return httpClient.savePlayers(players);
         } catch (IOException e) {
             e.printStackTrace();
             throw new InvalidInputError("An Error occurred while passing data to data storing responsible application : "
@@ -227,4 +233,7 @@ public class HTMLParserService {
         this.linkToSiteWithTeams = linkToSiteWithTeams;
         return linkToSiteWithTeams;
     }
+
+
+
 }

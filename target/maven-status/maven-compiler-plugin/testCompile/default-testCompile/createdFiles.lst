@@ -1,2 +1,6 @@
+parser/services/client/ClientTest.class
 parser/services/client/implementations/ApacheHttpClientTest.class
+parser/services/client/implementations/RestTemplateClientTest.class
+parser/services/client/ClientTest$1.class
+parser/controllers/ParserControllerTest.class
 parser/services/HtmlParserServiceTest.class

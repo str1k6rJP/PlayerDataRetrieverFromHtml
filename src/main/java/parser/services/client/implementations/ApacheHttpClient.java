@@ -68,7 +68,7 @@ StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
     @Override
     public int saveTeam(String jsonStringWithName) throws IOException, AuthenticationException {
         ResponseHandler<String> handler = new BasicResponseHandler();
-        String requestParameter = jsonStringWithName.split(":")[1].split("}")[0].replace(' ', '_');
+        String requestParameter = jsonStringWithName.split("[\"{,:}]++")[2].replace(' ', '_');
 
         HttpPost postTeam = new HttpPost(getConnectionParams(requestForSaveTeam) + "/" + requestParameter);
 

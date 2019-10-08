@@ -1,6 +1,10 @@
+/home/dmaliovanyi/parsehttp/src/main/java/parser/services/client/implementations/RestTemplateClient.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/services/client/HttpClient.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/errors/InvalidInputError.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/controllers/ParserController.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/services/HTMLParserService.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/services/client/implementations/ApacheHttpClient.java
+/home/dmaliovanyi/parsehttp/src/main/java/parser/beans/Team.java
+/home/dmaliovanyi/parsehttp/src/main/java/parser/ContentConfig.java
+/home/dmaliovanyi/parsehttp/src/main/java/parser/beans/Player.java
 /home/dmaliovanyi/parsehttp/src/main/java/parser/Application.java

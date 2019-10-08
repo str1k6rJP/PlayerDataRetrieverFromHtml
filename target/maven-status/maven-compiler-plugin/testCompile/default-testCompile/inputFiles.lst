@@ -1,2 +1,5 @@
+/home/dmaliovanyi/parsehttp/src/test/java/parser/services/client/ClientTest.java
 /home/dmaliovanyi/parsehttp/src/test/java/parser/services/HtmlParserServiceTest.java
 /home/dmaliovanyi/parsehttp/src/test/java/parser/services/client/implementations/ApacheHttpClientTest.java
+/home/dmaliovanyi/parsehttp/src/test/java/parser/services/client/implementations/RestTemplateClientTest.java
+/home/dmaliovanyi/parsehttp/src/test/java/parser/controllers/ParserControllerTest.java

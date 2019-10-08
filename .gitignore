@@ -1,9 +1,9 @@
 *
 
-!src
+!src/
 
 !dockerfile
 
-!docker-compose
+!docker-compose/
 
 !pom.xml

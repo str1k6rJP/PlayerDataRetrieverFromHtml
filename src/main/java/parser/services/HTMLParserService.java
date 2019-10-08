@@ -1,6 +1,5 @@
 package parser.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jsoup.Jsoup;
@@ -8,7 +7,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import parser.Application;
 import parser.beans.Player;
 import parser.beans.Team;
 import parser.errors.InvalidInputError;
@@ -111,7 +109,7 @@ public class HTMLParserService {
 //teamJson = teamJson
 //        .split("[\"{,:}]++")[2];
                 currentTeamId = httpClient.saveTeam(teamJson);
-                System.out.println(teamJson.replaceAll("\"?id\"?:\"?0\"?","id:"+currentTeamId));
+                System.out.println(teamJson.replaceAll("\"?id\"?:\"?0\"?", "id:" + currentTeamId));
             } catch (AuthenticationException e) {
                 System.err.println("Credentials weren't set correctly!!\nPlease reset credentials!");
                 e.printStackTrace();
@@ -183,7 +181,7 @@ public class HTMLParserService {
             sb.deleteCharAt(sb.length() - 1);
         }
         sb.append(']');*/
-            return (playerLayouts);
+        return (playerLayouts);
     }
 
     public String setConnectionParams(String singleLineParam) {
@@ -230,7 +228,6 @@ public class HTMLParserService {
         this.linkToSiteWithTeams = linkToSiteWithTeams;
         return linkToSiteWithTeams;
     }
-
 
 
 }

@@ -34,9 +34,10 @@ public class ParserController {
     public String putPlayersToAppViaAPI(@RequestBody(required = false) String jsonToSave) throws IOException {
         return String.format("{\"is-success\":\"%s\"}", jsonToSave == null ? parserService
                 .savePlayersViaControllerAPI(
-                                parserService.getPlayersStringBySiteWithTeamList())
+                        parserService.getPlayersStringBySiteWithTeamList())
                 : parserService
-                .savePlayersViaControllerAPI(new ObjectMapper().readValue(jsonToSave, new TypeReference<List<Player>>(){})));
+                .savePlayersViaControllerAPI(new ObjectMapper().readValue(jsonToSave, new TypeReference<List<Player>>() {
+                })));
     }
 
     @PostMapping("/setLink")

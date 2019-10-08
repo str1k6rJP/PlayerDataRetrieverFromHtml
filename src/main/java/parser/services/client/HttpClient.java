@@ -108,7 +108,7 @@ public interface HttpClient {
      */
     UsernamePasswordCredentials getCredentials();
 
-    default  <T> String getInstanceInJsonFormat(T instance) throws JsonProcessingException {
+    default <T> String getInstanceInJsonFormat(T instance) throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(instance);
     }
 

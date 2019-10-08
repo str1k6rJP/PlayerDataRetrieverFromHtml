@@ -67,9 +67,9 @@ public class ContentConfig {
     }
 
     @NotNull
-    private HttpClient setDefaultConnectionConfig(HttpClient httpClient){
-        httpClient.setConnectionParams(hostName,port.toString());
-        httpClient.setCredentials(username,password);
+    private HttpClient setDefaultConnectionConfig(HttpClient httpClient) {
+        httpClient.setConnectionParams(hostName, port.toString());
+        httpClient.setCredentials(username, password);
         return httpClient;
     }
 

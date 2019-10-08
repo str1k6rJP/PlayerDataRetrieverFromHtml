@@ -34,9 +34,9 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public boolean savePlayers(List<Player> players) throws IOException, AuthenticationException {
-String jsonString = getInstanceInJsonFormat(players);
+        String jsonString = getInstanceInJsonFormat(players);
         HttpPost postPlayers = new HttpPost(getConnectionParams(requestForSavePlayers));
-StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
+        StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
 
         System.out.println(entity);
         postPlayers.setEntity(entity);
@@ -87,7 +87,7 @@ StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
                 } while (currentByte != -1);
             }
             response.close();
-            Team team = new ObjectMapper().readValue(sb.toString(),Team.class);
+            Team team = new ObjectMapper().readValue(sb.toString(), Team.class);
             //retrieves id of team set to database just now
             return team.getId();
         }
@@ -147,7 +147,6 @@ StringEntity entity = new StringEntity(jsonString, StandardCharsets.UTF_8);
     private void setUsername(String username) {
         this.username = username;
     }
-
 
 
 }

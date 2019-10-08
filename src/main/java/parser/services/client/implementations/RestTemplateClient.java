@@ -131,7 +131,6 @@ public class RestTemplateClient implements HttpClient {
         httpHeaders.setBasicAuth(credentials.getUserName(), credentials.getPassword());
         httpHeaders.add("Content-Type", "application/json");
         httpHeaders.add("Content-Type", "text/plain");
-
         httpHeaders.add("Accept", "application/json");
         return httpHeaders;
     }

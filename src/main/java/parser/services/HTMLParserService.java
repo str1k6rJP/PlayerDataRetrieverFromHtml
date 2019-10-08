@@ -79,10 +79,7 @@ public class HTMLParserService {
         Element laliga = document.select("table.wikitable").first();
 
         Elements rows = laliga.getElementsByTag("tr");
-        if (Application.consoleWriterMode) {
-            System.out.println("Html rows with team names specification");
-            System.out.println(rows);
-        }
+
         List<Player> players = new LinkedList<>();
 
         for (Element row : rows) {

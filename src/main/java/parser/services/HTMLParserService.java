@@ -1,19 +1,15 @@
 package parser.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.AuthenticationException;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import parser.Application;
 import parser.beans.Player;
 import parser.beans.Team;
 import parser.errors.InvalidInputError;
-import parser.services.client.HttpClient;
 import parser.services.client.implementations.AbstractHttpClient;
 
 import java.io.IOException;
@@ -113,13 +109,13 @@ public class HTMLParserService {
                 currentTeam = new Team(row.toString().split("title=\"")[1].split("\"")[0]);
 
                 currentTeam.setId(httpClient.saveTeam(currentTeam));
-                log.info(String.format("Team instance %s was successfully saved to db",currentTeam.toString()));
+                log.info(String.format("Team instance %s was successfully saved to db", currentTeam.toString()));
             } catch (AuthenticationException e) {
-                log.error("Credentials weren't set correctly!!\nPlease reset credentials!",e.getMessage(), e);
+                log.error("Credentials weren't set correctly!!\nPlease reset credentials!", e.getMessage(), e);
                 break;
             } catch (IOException e) {
                 log.error("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop."
-                , e.getMessage(), e);
+                        , e.getMessage(), e);
                 continue;
             }
             players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeam.getId()));
@@ -189,15 +185,15 @@ public class HTMLParserService {
     }
 
     public String setConnectionParams(String host, String port) {
-        if (httpClient.setInitialConnPath(host,port)) {
+        if (httpClient.setInitialConnPath(host, port)) {
             return httpClient.getInitialConnectionPath().toString();
         }
         return null;
     }
 
     public String setUsernamePasswordCredentials(String username, String password) {
-        httpClient.setCredentials(username,password);
-        return String.format("Username: %s ;\nPassword: %s", httpClient.getUsername(),httpClient.getPassword());
+        httpClient.setCredentials(username, password);
+        return String.format("Username: %s ;\nPassword: %s", httpClient.getUsername(), httpClient.getPassword());
     }
 
     public boolean savePlayersViaControllerAPI(List<Player> players) throws InvalidInputError {

@@ -63,7 +63,7 @@
             <artifactId>checkstyle</artifactId>
             <version>8.25</version>
         </dependency>
-        
+
         <!-- Jsoup for parsing html pages-->
         <dependency>
             <groupId>org.jsoup</groupId>

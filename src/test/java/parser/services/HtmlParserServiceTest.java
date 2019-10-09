@@ -2,7 +2,6 @@ package parser.services;
 
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -66,8 +65,8 @@ public class HtmlParserServiceTest {
     @Test
     public void testCredentials() throws Exception {
         parserService.setUsernamePasswordCredentials(userName, password);
-assert parserService.httpClient.getUsername().equals(userName);
-assert parserService.httpClient.getPassword().equals(password);
+        assert parserService.httpClient.getUsername().equals(userName);
+        assert parserService.httpClient.getPassword().equals(password);
     }
 
     @Test

@@ -75,7 +75,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
             }
             response.close();
             return objectMapper.readValue(sb.toString(), Team.class).getId();
-            }
+        }
         return -1;
     }
 

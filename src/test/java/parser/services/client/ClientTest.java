@@ -52,7 +52,7 @@ public abstract class ClientTest {
     String host = "localhost", port = "8083", request = "team";
     String userName = "str1k6r", password = "that'sME";
     String jsonStringWithTeam = "[{teamName:reallyBadTeamName}]";
-    Team testTeam= new Team("reallyBadTeamName");
+    Team testTeam = new Team("reallyBadTeamName");
     String jsonPlayersString =
             "[{\"surname\":\"reallySurname\",\"role\":\"midfielder\",\"teamId\":\"1\"},{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}]";
 

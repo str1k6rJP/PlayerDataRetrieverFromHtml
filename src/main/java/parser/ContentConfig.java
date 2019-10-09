@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import parser.services.HTMLParserService;
-import parser.services.client.HttpClient;
 import parser.services.client.implementations.AbstractHttpClient;
 import parser.services.client.implementations.ApacheHttpClient;
 import parser.services.client.implementations.RestTemplateClient;
@@ -66,7 +65,7 @@ public class ContentConfig {
 
     @NotNull
     private AbstractHttpClient setDefaultConnectionConfig(AbstractHttpClient httpClient) {
-        httpClient.setInitialConnPath(hostName,port);
+        httpClient.setInitialConnPath(hostName, port);
         httpClient.setCredentials(username, password);
         return httpClient;
     }

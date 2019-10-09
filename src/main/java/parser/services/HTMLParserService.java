@@ -30,7 +30,7 @@ import java.util.List;
 public class HTMLParserService {
 
 
-    private AbstractHttpClient httpClient;
+    public AbstractHttpClient httpClient;
 
     private List<String> teamList;
 

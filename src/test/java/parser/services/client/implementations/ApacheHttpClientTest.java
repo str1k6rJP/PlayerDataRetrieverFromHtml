@@ -15,11 +15,11 @@ public class ApacheHttpClientTest extends ClientTest {
 
     @Autowired
     @Qualifier("httpClientApache")
-    public HttpClient httpClient;
+    public AbstractHttpClient httpClient;
 
 
     @Override
-    public HttpClient getHttpClient() {
+    public AbstractHttpClient getHttpClient() {
         return httpClient;
     }
 

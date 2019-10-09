@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.springframework.stereotype.Service;
 import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
@@ -49,6 +48,10 @@ public abstract class AbstractHttpClient implements HttpClient {
         }
     }
 
+    public boolean setInitialConnPath(String host, int port) {
+        return setInitialConnPath(host, port + "");
+    }
+
 
     /**
      * Returns <code>String</code> in form of http[s]://<host>:<port>/
@@ -65,7 +68,7 @@ public abstract class AbstractHttpClient implements HttpClient {
      * @param request request to the applications' API
      * @return prebuilt request in full form as <code>String</code>
      */
-    String getConnectionPathTo(String request) {
+    public String getConnectionPathTo(String request) {
         return getInitialConnectionPath() + request;
     }
 
@@ -80,8 +83,6 @@ public abstract class AbstractHttpClient implements HttpClient {
         this.username = username;
         this.password = password;
     }
-
-
 
 
     public String getPassword() {

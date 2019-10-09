@@ -23,10 +23,10 @@ public class RestTemplateClientTest extends ClientTest {
 
     @Autowired
     @Qualifier("httpClientRestTemplate")
-    public HttpClient httpClient;
+    public AbstractHttpClient httpClient;
 
     @Override
-    public HttpClient getHttpClient() {
+    public AbstractHttpClient getHttpClient() {
         return httpClient;
     }
 

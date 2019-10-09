@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import parser.services.HTMLParserService;
 import parser.services.client.HttpClient;
+import parser.services.client.implementations.AbstractHttpClient;
 import parser.services.client.implementations.ApacheHttpClient;
 import parser.services.client.implementations.RestTemplateClient;
 
@@ -37,14 +38,14 @@ public class ContentConfig {
     private String password;
 
     @Bean(name = "httpClientApache")
-    public HttpClient httpClientApache() {
+    public AbstractHttpClient httpClientApache() {
         ApacheHttpClient apacheHttpClient = new ApacheHttpClient();
         System.err.println("apache: " + apacheHttpClient.getClass());
         return setDefaultConnectionConfig(apacheHttpClient);
     }
 
     @Bean(name = "httpClientRestTemplate")
-    public HttpClient httpClientRestTemplate() {
+    public AbstractHttpClient httpClientRestTemplate() {
         RestTemplateClient restTemplateClient = new RestTemplateClient();
         System.err.println("restTemplate: " + restTemplateClient.getClass());
         return setDefaultConnectionConfig(restTemplateClient);
@@ -64,8 +65,8 @@ public class ContentConfig {
     }
 
     @NotNull
-    private HttpClient setDefaultConnectionConfig(HttpClient httpClient) {
-        httpClient.setConnectionParams(hostName, port.toString());
+    private AbstractHttpClient setDefaultConnectionConfig(AbstractHttpClient httpClient) {
+        httpClient.setInitialConnPath(hostName,port);
         httpClient.setCredentials(username, password);
         return httpClient;
     }

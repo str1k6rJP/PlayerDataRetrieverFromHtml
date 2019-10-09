@@ -89,7 +89,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
      */
     @Override
     public void setCredentials(String username, String password) {
-        setCredentials(username, password);
+        super.setCredentials(username, password);
         credentials = new UsernamePasswordCredentials(username, password);
     }
 

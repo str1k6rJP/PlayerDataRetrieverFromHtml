@@ -65,9 +65,9 @@ public class HtmlParserServiceTest {
     @Before
     @Test
     public void testCredentials() throws Exception {
-        UsernamePasswordCredentials credentials = parserService.setUsernamePasswordCredentials(userName, password);
-
-        assert (credentials.getPassword().equals(password) && credentials.getUserName().equals(userName));
+        parserService.setUsernamePasswordCredentials(userName, password);
+assert parserService.httpClient.getUsername().equals(userName);
+assert parserService.httpClient.getPassword().equals(password);
     }
 
     @Test

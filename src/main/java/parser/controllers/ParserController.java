@@ -38,7 +38,7 @@ public class ParserController {
      * Fourth is for action subject (site, link, database
      */
     public static final String RETRIEVED_TEMPLATE = "%s %s were retrieved from %s";
-    public static final String WEBDOC_FAILED = "\nWeb document wasn't downloaded correctly!\n";
+    public static final String WEBDOC_FAILED = "\\%nWeb document wasn't downloaded correctly!\\%n";
     @Autowired
     @Qualifier("configuredHtmlParserService")
     private HTMLParserService parserService;
@@ -56,7 +56,7 @@ public class ParserController {
                 unsavedMap = parserService.retrieveTeams(doc);
             } else {
                 log.error(WEBDOC_FAILED);
-                return WEBDOC_FAILED + "The most possible reason is that link to site with teams is absent or incorrect\n" +
+                return WEBDOC_FAILED + "The most possible reason is that link to site with teams is absent or incorrect\\%n" +
                         "PLease consider resetting it (it can be done with POST method at /autofill/setLink with <protocol://host:port> in the body";
             }
             if (unsavedMap == null || unsavedMap.size() == 0) {
@@ -70,11 +70,11 @@ public class ParserController {
 
             Map<URL, Team> savedMap = new HashMap<>(unsavedMap.size());
 
-            for (Map.Entry<URL, Team> entry : savedMap.entrySet()) {
+            for (Map.Entry<URL, Team> entry : unsavedMap.entrySet()) {
                 temporalTeam = httpClient.saveTeam(entry.getValue());
                 if ((temporalTeam == null) || (temporalTeam.getId() < 1)
                         || (!(temporalTeam.getTeamName().equals(entry.getValue().getTeamName())))) {
-                    log.error("Team wasn't saved correctly!!\nIt will be skipped");
+                    log.error("Team wasn't saved correctly!!\\%nIt will be skipped");
                     continue;
                 }
                 savedMap.put(entry.getKey(), temporalTeam);

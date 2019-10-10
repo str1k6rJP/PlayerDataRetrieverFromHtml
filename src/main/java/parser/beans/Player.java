@@ -11,7 +11,7 @@ public class Player {
 
     private int id;
 
-    private String nameAndSurname;
+    private String surname;
 
     private String role;
 
@@ -21,7 +21,7 @@ public class Player {
     public Player(@JsonProperty("surname") String surname
             , @JsonProperty("role") String role
             , @JsonProperty("teamId") int teamId) {
-        setNameAndSurname(surname);
+        setSurname(surname);
         setRole(role);
         setTeamId(teamId);
     }

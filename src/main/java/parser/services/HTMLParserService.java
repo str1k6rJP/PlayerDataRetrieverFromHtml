@@ -54,6 +54,9 @@ public class HTMLParserService {
 
     public Map<URL, Team> retrieveTeams(@NotNull Document document) {
         Element laliga = document.select("table.wikitable").first();
+        if (laliga==null){
+            return null;
+        }
         HashMap<URL, Team> returnMap = new HashMap<>();
         Elements rows = laliga.getElementsByTag("tr");
         URL url;
@@ -67,7 +70,7 @@ public class HTMLParserService {
             //log.info(String.format("Team instance %s was successfully saved to db", currentTeam.toString()));
 
             try {
-                url = new URL(String.format("https://en.wikipedia.org%s", row.toString().split("\\n+")[1].split(">")[1].split("\"")[1]));
+                url = new URL(String.format("https://en.wikipedia.org%s", row.toString().split("\n+")[1].split(">")[1].split("\"")[1]));
 
                 returnMap.put(url, currentTeam);
             } catch (IOException e) {
@@ -93,7 +96,7 @@ public class HTMLParserService {
 
         for (URL url : savedTeamMap.keySet()) {
             if (savedTeamMap.get(url).getId() < 1) {
-                log.error("Unsaved Team instance was accidentally detected in the map!!!\nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\nIt would be reviewed and resolved");
+                log.error("Unsaved Team instance was accidentally detected in the map!!!\\%nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\\%nIt would be reviewed and resolved");
                 continue;
             }
 

@@ -42,7 +42,7 @@ public class RestTemplateClient extends AbstractHttpClient {
                 , playersListToSet
                 , new ParameterizedTypeReference<List<Player>>() {
                 });
-        log.error("Status code" + (rateResponse.getStatusCode().value()));
+        log.info("Status code" + (rateResponse.getStatusCode().value()));
 
         return true;
     }
@@ -51,7 +51,7 @@ public class RestTemplateClient extends AbstractHttpClient {
     public Team saveTeam(Team team) {
 
         if (team.getTeamName() != null && team.getTeamName().length() != 0) {
-            URL url = null;
+            URL url;
             try {
                 url = new URL(getConnectionPathTo(REQUEST_SAVE_TEAM) + team.getTeamName());
             } catch (MalformedURLException e) {

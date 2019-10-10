@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import parser.beans.Team;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class HtmlParserServiceTest {
     public static final int STUB_PORT = 8084;
     public static final String postSingleTeam = "^\\/team\\/[^\\/]+";
     @ClassRule
-    public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
+    public static final WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
     @Autowired
     @Qualifier("configuredHtmlParserService")
     public HTMLParserService parserService;

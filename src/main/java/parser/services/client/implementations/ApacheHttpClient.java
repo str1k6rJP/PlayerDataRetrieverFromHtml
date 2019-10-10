@@ -35,7 +35,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
             entity = new StringEntity(objectMapper.writeValueAsString(playerList), StandardCharsets.UTF_8);
             postPlayers.setEntity(entity);
         } catch (JsonProcessingException e) {
-            log.error("Failed while parsing to JSON \n");
+            log.error("Failed while parsing to JSON \\%n");
             return false;
         }
 
@@ -46,7 +46,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
         try {
             postPlayers.addHeader(new BasicScheme().authenticate(getCredentials(), postPlayers, null));
         } catch (AuthenticationException e) {
-            log.error(String.format("Failed to access savePlayers()(so false will be returned) in with username %s and password %s in case of: \n%s", getUsername(), getPassword()), e);
+            log.error(String.format("Failed to access savePlayers()(so false will be returned) in with username %s and password %s", getUsername(), getPassword()), e);
 
         }
 
@@ -56,7 +56,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
         } catch (ClientProtocolException e) {
             log.error("Error in HTTP protocol has occurred!", e.getMessage(), e);
         } catch (IOException e) {
-            log.error("Connection has been aborted!\nThe service will try once more", e.getMessage(), e);
+            log.error("Connection has been aborted!\\%nThe service will try once more", e.getMessage(), e);
             try {
                 return executePost(postPlayers);
             } catch (IOException e1) {
@@ -70,12 +70,12 @@ public class ApacheHttpClient extends AbstractHttpClient {
     @Override
     public Team saveTeam(Team team) {
 
-        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName().replaceAll("\\s", "_"));
+        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName());
 
         try {
             postTeam.addHeader(new BasicScheme().authenticate(getCredentials(), postTeam, null));
         } catch (AuthenticationException e) {
-            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: \n%s"), e);
+            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: \\%n%s"), e);
             return null;
         }
 

@@ -10,19 +10,20 @@ import java.util.List;
 public interface HttpClient {
 
     /**
-     * Receives templates of objects to be set, returns list of <code>Player</code> which were set
+     * Receives templates of <code>Player</code> to be set, returns true if and only if all the entities were successfully set to the database
      *
      * @param playerList
      * @return <code>boolean</code>
      */
-    boolean savePlayers(List<Player> playerList) throws IOException, AuthenticationException;
+    boolean savePlayers(List<Player> playerList);
 
     /**
      * Receives <code>Team</code> prefab to save in, returns id of team saved
-     * If save was failed, returns -1
      *
      * @param team team entity prefab
-     * @return <code>Team.id</code> field value
+     * @return <code>Team</code> returned by database
      */
-    int saveTeam(Team team) throws IOException, AuthenticationException;
+    Team saveTeam(Team team);
+
+    boolean setInitialConnectionPath(String connectionPath);
 }

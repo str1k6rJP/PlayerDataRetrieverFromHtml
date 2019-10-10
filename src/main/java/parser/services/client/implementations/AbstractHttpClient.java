@@ -5,51 +5,54 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import parser.errors.InvalidInputError;
 import parser.services.client.HttpClient;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 @Slf4j
 public abstract class AbstractHttpClient implements HttpClient {
-
+static final Pattern protocolPattern = Pattern.compile("^[a-z.]+://");
     static final String REQUEST_SAVE_TEAM = "team/";
     static final String REQUEST_SAVE_PLAYERS = "player/add";
-    static final Pattern NAME_PATTERN = Pattern.compile("teamName\\\"?[=:]\\\"?(?<teamName>[^\\\",}]{1,50}+)\\\"?[,}]");
+    private static final int PORT_LIMITER = 65535;
     ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    Pattern connectionPattern = Pattern.compile("^.*(://)?(?<host>.+):(?<port>\\d+)$");
     private URL initialConnPath;
     private String username;
     private String password;
 
+
     /**
      * Sets path to the target service. All the further requests will contain this path followed by request
      *
-     * @param host
-     * @param port
+     * @param connection path to the target service
      * @return true in case URL is valid
-     * @throws InvalidInputError if input was incorrect
      */
-    public boolean setInitialConnPath(String host, String port) {
-        if (host.matches("[:;/\\\\]")) {
-            throw new InvalidInputError(String.format("Error while validation of acceptable symbols in host: %s", host));
-        }
-        if (port.matches("[^0-9]")) {
-            throw new InvalidInputError(String.format("Invalid port value: %s\nPort should contain only digits", port));
-        }
-        try {
-            this.initialConnPath = new URL(String.format("http://%s:%s/", host, port));
-            return true;
-        } catch (MalformedURLException e) {
-            log.error("Failed to set valid link!!!", e.getMessage(), e);
-            return false;
-        }
-    }
+    public boolean setInitialConnectionPath(String connection) {
+        Matcher matcher = connectionPattern.matcher(connection);
 
-    public boolean setInitialConnPath(String host, int port) {
-        return setInitialConnPath(host, port + "");
+        if (matcher.find()) {
+            if (Integer.parseInt(matcher.group("port")) <= PORT_LIMITER) {
+                if (connectionPattern.matcher(connection).find()) {
+                    try {
+                        this.initialConnPath = new URL(connection);
+                        return true;
+                    } catch (MalformedURLException e) {
+                        log.error("Failed to set valid link!!!", e.getMessage(), e);
+                    }
+                }
+                log.error("URL specified missing a protocol");
+                return false;
+            }
+            log.error(String.format("%s isn't valid port number!!!\nIt should be natural number less than %S", matcher.group("port"), PORT_LIMITER));
+        return false;
+        }
+        log.error(String.format("%s isn't valid value for service path", connection));
+        return false;
     }
 
 
@@ -69,7 +72,7 @@ public abstract class AbstractHttpClient implements HttpClient {
      * @return prebuilt request in full form as <code>String</code>
      */
     public String getConnectionPathTo(String request) {
-        return getInitialConnectionPath() + request;
+        return String.format("%s/%s", getInitialConnectionPath().toString(), request);
     }
 
     /**
@@ -94,6 +97,6 @@ public abstract class AbstractHttpClient implements HttpClient {
     }
 
     public <T> String getInstanceInJsonFormat(T instance) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(instance);
+        return objectMapper.writeValueAsString(instance);
     }
 }

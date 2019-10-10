@@ -2,7 +2,7 @@ server:
   port: 8090
 http-client:
   type: httpClientRestTemplate
-  port: 8083
+  host: http://localhost:8083
   login:
     username: str1k6r
     password: that'sME

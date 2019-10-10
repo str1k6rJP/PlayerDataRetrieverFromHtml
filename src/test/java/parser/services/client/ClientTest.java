@@ -46,10 +46,10 @@ public abstract class ClientTest {
             "  \"id\" : 0\n" +
             "} ]";
     @ClassRule
-    public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
+    public static final WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
     @Rule
     public WireMockClassRule wireMockRule = wireMockRuleStat;
-    String host = "localhost", port = "8083", request = "team";
+    String connection = "http://localhost:8083", request = "team";
     String userName = "str1k6r", password = "that'sME";
     String jsonStringWithTeam = "[{teamName:reallyBadTeamName}]";
     Team testTeam = new Team("reallyBadTeamName");
@@ -77,14 +77,14 @@ public abstract class ClientTest {
 
     @Before
     public void setConnectionParams() {
-        getHttpClient().setInitialConnPath(host, port);
+        getHttpClient().setInitialConnectionPath(connection);
     }
 
     @Test
     public void testConnectionParams() throws Exception {
         String connectionParams;
         System.out.println(connectionParams = getHttpClient().getConnectionPathTo(request));
-        assert (connectionParams.equals("http://" + host + ":" + port + "/" + request));
+        assert (connectionParams.equals(String.format("%s/%s",connection, request)));
     }
 
     @Before
@@ -96,14 +96,14 @@ public abstract class ClientTest {
 
     @Test
     public void testSaveTeam() throws Exception {
-        int teamId = getHttpClient().saveTeam(testTeam);
+        int teamId = getHttpClient().saveTeam(testTeam).getId();
         System.out.println(teamId);
         assert (teamId > 0);
     }
 
     @Test
     public void testSavePlayers() throws Exception {
-        getHttpClient().setInitialConnPath(host, port);
+        getHttpClient().setInitialConnectionPath(connection);
         assert getHttpClient().savePlayers(new ObjectMapper().readValue(jsonPlayersString, new TypeReference<List<Player>>() {
         }));
     }

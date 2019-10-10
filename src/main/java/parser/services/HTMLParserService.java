@@ -2,6 +2,7 @@ package parser.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.AuthenticationException;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,9 +14,12 @@ import parser.errors.InvalidInputError;
 import parser.services.client.implementations.AbstractHttpClient;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author str1k6rJP
@@ -25,22 +29,13 @@ import java.util.List;
 @Slf4j
 public class HTMLParserService {
 
-
-    public AbstractHttpClient httpClient;
-
-    private List<String> teamList;
-
-    private List<String> playerList;
+    private static final int TEAM_PLAYERS_MULTIPLIER = 30;
 
     private String lastURLToTeamList;
 
     private String linkToSiteWithTeams;
 
-    private int sizeOfArrayDesiredToBeSet = 500;
 
-    public void setHttpClient(AbstractHttpClient httpClient) {
-        this.httpClient = httpClient;
-    }
 
     /**
      * Returns web document by hyper reference predefined or defined by {@link #setLinkToSiteWithTeams(String)}
@@ -51,17 +46,42 @@ public class HTMLParserService {
         try {
             return Jsoup.connect(linkToSiteWithTeams).get();
         } catch (IOException e) {
+            log.error(e.getMessage(),e);
             try {
                 return Jsoup.connect(lastURLToTeamList).get();
             } catch (IOException e1) {
-                e.printStackTrace();
-                System.out.println("\n\n\n");
-                e1.printStackTrace();
+                log.error(e1.getMessage(),e1);
             }
         }
         return null;
     }
 
+
+    public Map<URL, Team> retrieveTeams(@NotNull Document document){
+        Element laliga = document.select("table.wikitable").first();
+        HashMap<URL, Team> returnMap = new HashMap<>();
+        Elements rows = laliga.getElementsByTag("tr");
+        URL url;
+        Team currentTeam;
+
+        for (Element row : rows) {
+            if (row.toString().contains("<th>")) {
+                continue;
+            }
+            currentTeam = new Team(row.toString().split("title=\"")[1].split("\"")[0]);
+            //log.info(String.format("Team instance %s was successfully saved to db", currentTeam.toString()));
+
+            try {
+                url = new URL(String.format("https://en.wikipedia.org%s", row.toString().split("\\n+")[1].split(">")[1].split("\"")[1]));
+
+                returnMap.put(url,currentTeam);
+            } catch (IOException e) {
+                log.error(e.getMessage(),e);
+            }
+
+        }
+        return returnMap;
+    }
     /**
      * Returns list of all the players templates retrieved by this parser method.
      * Mechanics lays down in retrieving the whole html document with table containing teams' names and hyperlink
@@ -69,59 +89,39 @@ public class HTMLParserService {
      *
      * @return list of players retrieved from the web document
      */
-    public List<Player> getPlayersStringBySiteWithTeamList() {
-        if (teamList == null) {
-            teamList = new ArrayList<>(sizeOfArrayDesiredToBeSet);
-        }
+    public List<Player> getPlayersListBySiteWithTeamList(Map<URL,Team> savedTeamMap) {
+        List<Player> players = new ArrayList<>(savedTeamMap.size()*TEAM_PLAYERS_MULTIPLIER);
 
-        Document document = getWebDoc();
-        Element laliga = document.select("table.wikitable").first();
+        String[] playersFirstTablePart = null;
+        String[] playersSecondTablePart = null;
 
-        Elements rows = laliga.getElementsByTag("tr");
-
-        List<Player> players = new LinkedList<>();
-
-        for (Element row : rows) {
-            if (row.toString().contains("<th>")) {
+        for (URL url: savedTeamMap.keySet()) {
+            if (savedTeamMap.get(url).getId()<1){
+                log.error("Unsaved Team instance was accidentally detected in the map!!!\nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\nIt would be reviewed and resolved");
                 continue;
             }
 
-            String[] playersFirstTablePart = null;
-            String[] playersSecondTablePart = null;
+            String[] playersTable;
             try {
-                String[] playersTable
-                        = Jsoup.connect(String.format("https://en.wikipedia.org%s", row.toString().split("\\n+")[1].split(">")[1].split("\"")[1]))
-                        .get().toString().split("<h[23]>");
-                for (String s : playersTable
-                ) {
-                    if (s.contains("\"Current_squad\"")) {
-                        playersFirstTablePart = s.split("<tbody>")[2].split("</td>");
-                        playersSecondTablePart = s.split("<tbody>")[3].split("</td>");
-                        break;
-                    }
+                playersTable = Jsoup.connect(url.toString())
+                .get().toString().split("<h[23]>");
+            } catch (IOException e) {
+                log.error(e.getMessage(),e);
+                continue;
+            }
+            for (String s : playersTable
+            ) {
+                if (s.contains("\"Current_squad\"")) {
+                    playersFirstTablePart = s.split("<tbody>")[2].split("</td>");
+                    playersSecondTablePart = s.split("<tbody>")[3].split("</td>");
+                    break;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-            Team currentTeam;
 
-            try {
-                currentTeam = new Team(row.toString().split("title=\"")[1].split("\"")[0]);
-
-                currentTeam.setId(httpClient.saveTeam(currentTeam));
-                log.info(String.format("Team instance %s was successfully saved to db", currentTeam.toString()));
-            } catch (AuthenticationException e) {
-                log.error("Credentials weren't set correctly!!\nPlease reset credentials!", e.getMessage(), e);
-                break;
-            } catch (IOException e) {
-                log.error("IOException has occured!\nThat means something was wrong with performing the data of the current team\nIt will be skipped and the application will continue from next loop."
-                        , e.getMessage(), e);
-                continue;
-            }
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, currentTeam.getId()));
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, currentTeam.getId()));
-
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, savedTeamMap.get(url).getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, savedTeamMap.get(url).getId()));
         }
+
         lastURLToTeamList = linkToSiteWithTeams;
         return players;
     }
@@ -164,53 +164,6 @@ public class HTMLParserService {
     }
 
     /**
-     * Returns JSON string containing all the players' entities
-     *
-     * @param playerLayouts list of all the player string layouts
-     * @return JSON string
-     */
-    public List<Player> getPlayersInJsonFormat(List<Player> playerLayouts) {
-        //StringBuilder sb = new StringBuilder();
-/*        sb.append('[');
-        for (String playerLayout : playerLayouts
-        ) {
-            String[] values = playerLayout.split("::");
-            sb.append("{\"surname\":\"").append(values[1]).append("\",\"role\":\"").append(values[0]).append("\",\"teamId\":\"").append(values[2]).append("\"},");
-        }
-        if (sb.charAt(sb.length() - 1) == ',') {
-            sb.deleteCharAt(sb.length() - 1);
-        }
-        sb.append(']');*/
-        return (playerLayouts);
-    }
-
-    public String setConnectionParams(String host, String port) {
-        if (httpClient.setInitialConnPath(host, port)) {
-            return httpClient.getInitialConnectionPath().toString();
-        }
-        return null;
-    }
-
-    public String setUsernamePasswordCredentials(String username, String password) {
-        httpClient.setCredentials(username, password);
-        return String.format("Username: %s ;\nPassword: %s", httpClient.getUsername(), httpClient.getPassword());
-    }
-
-    public boolean savePlayersViaControllerAPI(List<Player> players) throws InvalidInputError {
-        try {
-            return httpClient.savePlayers(players);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new InvalidInputError("An Error occurred while passing data to data storing responsible application : "
-                    + e.getMessage() + "\n" + e.getCause());
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-            throw new InvalidInputError("Wrong credentials were entered! This source can't be accessed with these username and password : "
-                    + e.getMessage() + "\n" + e.getCause());
-        }
-    }
-
-    /**
      * Sets link to be used when method {@link #getWebDoc()} called
      *
      * @param linkToSiteWithTeams link to site with table containing teams and references to its'pages
@@ -221,5 +174,7 @@ public class HTMLParserService {
         return linkToSiteWithTeams;
     }
 
-
+    public String getLinkToSiteWithTeams() {
+        return linkToSiteWithTeams;
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import parser.services.HTMLParserService;
+import parser.services.client.HttpClient;
 import parser.services.client.implementations.AbstractHttpClient;
 import parser.services.client.implementations.ApacheHttpClient;
 import parser.services.client.implementations.RestTemplateClient;
@@ -20,12 +21,8 @@ public class ContentConfig {
     public String httpClientType;
 
     @NotNull
-    @Value("${http-client.host:localhost}")
-    public String hostName;
-
-    @NotNull
-    @Value("${http-client.port:8080}")
-    public Integer port;
+    @Value("${http-client.host:localhost:8080}")
+    public String connectionString;
     @Nullable
     @Value("${html-parser.default-link}")
     public String defaultLink;
@@ -37,37 +34,39 @@ public class ContentConfig {
     private String password;
 
     @Bean(name = "httpClientApache")
-    public AbstractHttpClient httpClientApache() {
+    public ApacheHttpClient httpClientApache() {
         ApacheHttpClient apacheHttpClient = new ApacheHttpClient();
         System.err.println("apache: " + apacheHttpClient.getClass());
         return setDefaultConnectionConfig(apacheHttpClient);
     }
 
     @Bean(name = "httpClientRestTemplate")
-    public AbstractHttpClient httpClientRestTemplate() {
+    public RestTemplateClient httpClientRestTemplate() {
         RestTemplateClient restTemplateClient = new RestTemplateClient();
         System.err.println("restTemplate: " + restTemplateClient.getClass());
         return setDefaultConnectionConfig(restTemplateClient);
+    }
+    @Bean
+    public HttpClient httpClient(){
+        if (httpClientType.equals("httpClientRestTemplate")) {
+            return httpClientRestTemplate();
+        }
+        else {
+            return httpClientApache();
+        }
     }
 
     @Bean(name = "configuredHtmlParserService")
     public HTMLParserService htmlParserService() {
         HTMLParserService htmlParserService = new HTMLParserService();
-        System.err.println(httpClientType);
-        if (httpClientType.equals("httpClientRestTemplate")) {
-            htmlParserService.setHttpClient(httpClientRestTemplate());
-        } else {
-            htmlParserService.setHttpClient(httpClientApache());
-        }
         htmlParserService.setLinkToSiteWithTeams(defaultLink);
         return htmlParserService;
     }
 
     @NotNull
-    private AbstractHttpClient setDefaultConnectionConfig(AbstractHttpClient httpClient) {
-        httpClient.setInitialConnPath(hostName, port);
+    private <T extends AbstractHttpClient> T setDefaultConnectionConfig(T httpClient) {
+        httpClient.setInitialConnectionPath(connectionString);
         httpClient.setCredentials(username, password);
         return httpClient;
     }
-
 }

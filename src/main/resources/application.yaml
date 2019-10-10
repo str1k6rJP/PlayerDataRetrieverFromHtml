@@ -1,10 +1,13 @@
 server:
-  port: 8085
+  port: 8084
 http-client:
-  type: httpClientApache
-  port: 8083
+  type: httpClientRestTemplate
+  host: http://localhost:8083
   login:
     username: str1k6r
     password: that'sME
 html-parser:
   default-link: https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain
+logging:
+  level:
+    root: INFO

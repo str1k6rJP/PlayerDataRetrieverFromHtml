@@ -12,6 +12,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
+import parser.beans.Team;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
@@ -23,7 +29,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 public class HtmlParserServiceTest {
 
     public static final int STUB_PORT = 8084;
-    public static final String postSingleTeam = "^\\/team\\/[^\\/]+", teamSaveResponse = "{\"id\":\"1\",\"teamName\":\"Success!\"}";
+    public static final String postSingleTeam = "^\\/team\\/[^\\/]+";
     @ClassRule
     public static WireMockClassRule wireMockRuleStat = new WireMockClassRule(STUB_PORT);
     @Autowired
@@ -32,7 +38,7 @@ public class HtmlParserServiceTest {
     @Rule
     public WireMockClassRule wireMockRule = wireMockRuleStat;
 
-    String host = "localhost", port = "8084";
+    String connection = "http://localhost:8084";
     String userName = "str1k6r", password = "that'sME";
 
     @Before
@@ -41,12 +47,10 @@ public class HtmlParserServiceTest {
                 post(urlPathMatching(postSingleTeam))
                         .withBasicAuth("str1k6r", "that'sME")
                         .willReturn(aResponse()
-                                .withStatus(HttpStatus.OK.value())
-                                .withBody(teamSaveResponse)));
+                                .withStatus(HttpStatus.OK.value())));
     }
 
     @Before
-    @Test
     public void testSetLink() throws Exception {
         String s = parserService.setLinkToSiteWithTeams("https://en.wikipedia.org/wiki/List_of_football_clubs_in_Spain");
         System.out.println(s);
@@ -55,24 +59,17 @@ public class HtmlParserServiceTest {
     }
 
 
-    @Before
-    @Test
-    public void testSetConnectionParams() throws Exception {
-        assert parserService.setConnectionParams(host, port).equals(String.format("http://%s:%s/", host, port));
-    }
-
-    @Before
-    @Test
-    public void testCredentials() throws Exception {
-        parserService.setUsernamePasswordCredentials(userName, password);
-        assert parserService.httpClient.getUsername().equals(userName);
-        assert parserService.httpClient.getPassword().equals(password);
-    }
-
     @Test
     public void testJsonResult() throws Exception {
-        System.out.println(parserService.getPlayersStringBySiteWithTeamList());
+        System.out.println(parserService.getPlayersListBySiteWithTeamList(getMap()));
 
+    }
+
+    private Map<URL,Team> getMap() throws MalformedURLException {
+        Map<URL,Team> result = new HashMap<>();
+        result.put(new URL("https://en.wikipedia.org/wiki/Deportivo_Alav%C3%A9s"),new Team("Deportivo Alavés",1));
+        result.put(new URL("https://en.wikipedia.org/wiki/Athletic_Bilbao"),new Team("Athletic Bilbao",2));
+        return result;
     }
 
 }

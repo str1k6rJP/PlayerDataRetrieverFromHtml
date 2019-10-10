@@ -16,6 +16,7 @@ import parser.beans.Player;
 import parser.beans.Team;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,41 +28,46 @@ public class RestTemplateClient extends AbstractHttpClient {
 
     private RestTemplate template = new RestTemplate();
 
-    {
+    public RestTemplateClient() {
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-
         messageConverters.add(converter);
         template.setMessageConverters(messageConverters);
     }
 
     @Override
-    public boolean savePlayers(List<Player> playerList) throws IOException, AuthenticationException {
-        HttpEntity<List<Player>> playersListToSet = new HttpEntity<>(playerList, getAuthHeader());
+    public boolean savePlayers(List<Player> playerList) {
+        HttpEntity<List<Player>> playersListToSet = new HttpEntity<>(playerList, getRequestHeaders());
         ResponseEntity<List<Player>> rateResponse = template.exchange(getConnectionPathTo(REQUEST_SAVE_PLAYERS)
                 , HttpMethod.POST
                 , playersListToSet
                 , new ParameterizedTypeReference<List<Player>>() {
                 });
         log.error("Status code" + (rateResponse.getStatusCode().value()));
-        System.err.println(true);
+
         return true;
     }
 
     @Override
-    public int saveTeam(Team team) throws IOException, AuthenticationException {
+    public Team saveTeam(Team team){
 
         if (team.getTeamName() != null && team.getTeamName().length() != 0) {
-            URL url = new URL(getConnectionPathTo(REQUEST_SAVE_TEAM) + team.getTeamName());
+            URL url = null;
+            try {
+                url = new URL(getConnectionPathTo(REQUEST_SAVE_TEAM) + team.getTeamName());
+            } catch (MalformedURLException e) {
+                log.error("Failed to build valid url!!",e.getMessage(),e);
+                return null;
+            }
             return template.postForObject(url.toString()
-                    , new HttpEntity<>(null, getAuthHeader()), Team.class).getId();
+                    , new HttpEntity<>(null, getRequestHeaders()), Team.class);
         }
         log.error(team.getTeamName() + "isn't a correct team name");
-        return -1;
+        return null;
     }
 
-    private HttpHeaders getAuthHeader() {
+    HttpHeaders getRequestHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(getUsername(), getPassword());
         httpHeaders.add("Content-Type", "application/json");

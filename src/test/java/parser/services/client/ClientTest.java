@@ -84,7 +84,7 @@ public abstract class ClientTest {
     public void testConnectionParams() throws Exception {
         String connectionParams;
         System.out.println(connectionParams = getHttpClient().getConnectionPathTo(request));
-        assert (connectionParams.equals(String.format("%s/%s",connection, request)));
+        assert (connectionParams.equals(String.format("%s/%s", connection, request)));
     }
 
     @Before

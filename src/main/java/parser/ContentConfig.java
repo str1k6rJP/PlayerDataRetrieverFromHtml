@@ -46,12 +46,12 @@ public class ContentConfig {
         System.err.println("restTemplate: " + restTemplateClient.getClass());
         return setDefaultConnectionConfig(restTemplateClient);
     }
+
     @Bean
-    public HttpClient httpClient(){
+    public HttpClient httpClient() {
         if (httpClientType.equals("httpClientRestTemplate")) {
             return httpClientRestTemplate();
-        }
-        else {
+        } else {
             return httpClientApache();
         }
     }

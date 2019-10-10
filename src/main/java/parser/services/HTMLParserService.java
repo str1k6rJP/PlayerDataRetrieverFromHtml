@@ -1,7 +1,6 @@
 package parser.services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.AuthenticationException;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,14 +9,11 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import parser.beans.Player;
 import parser.beans.Team;
-import parser.errors.InvalidInputError;
-import parser.services.client.implementations.AbstractHttpClient;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +32,6 @@ public class HTMLParserService {
     private String linkToSiteWithTeams;
 
 
-
     /**
      * Returns web document by hyper reference predefined or defined by {@link #setLinkToSiteWithTeams(String)}
      *
@@ -46,18 +41,18 @@ public class HTMLParserService {
         try {
             return Jsoup.connect(linkToSiteWithTeams).get();
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             try {
                 return Jsoup.connect(lastURLToTeamList).get();
             } catch (IOException e1) {
-                log.error(e1.getMessage(),e1);
+                log.error(e1.getMessage(), e1);
             }
         }
         return null;
     }
 
 
-    public Map<URL, Team> retrieveTeams(@NotNull Document document){
+    public Map<URL, Team> retrieveTeams(@NotNull Document document) {
         Element laliga = document.select("table.wikitable").first();
         HashMap<URL, Team> returnMap = new HashMap<>();
         Elements rows = laliga.getElementsByTag("tr");
@@ -74,14 +69,15 @@ public class HTMLParserService {
             try {
                 url = new URL(String.format("https://en.wikipedia.org%s", row.toString().split("\\n+")[1].split(">")[1].split("\"")[1]));
 
-                returnMap.put(url,currentTeam);
+                returnMap.put(url, currentTeam);
             } catch (IOException e) {
-                log.error(e.getMessage(),e);
+                log.error(e.getMessage(), e);
             }
 
         }
         return returnMap;
     }
+
     /**
      * Returns list of all the players templates retrieved by this parser method.
      * Mechanics lays down in retrieving the whole html document with table containing teams' names and hyperlink
@@ -89,14 +85,14 @@ public class HTMLParserService {
      *
      * @return list of players retrieved from the web document
      */
-    public List<Player> getPlayersListBySiteWithTeamList(Map<URL,Team> savedTeamMap) {
-        List<Player> players = new ArrayList<>(savedTeamMap.size()*TEAM_PLAYERS_MULTIPLIER);
+    public List<Player> getPlayersListBySiteWithTeamList(Map<URL, Team> savedTeamMap) {
+        List<Player> players = new ArrayList<>(savedTeamMap.size() * TEAM_PLAYERS_MULTIPLIER);
 
         String[] playersFirstTablePart = null;
         String[] playersSecondTablePart = null;
 
-        for (URL url: savedTeamMap.keySet()) {
-            if (savedTeamMap.get(url).getId()<1){
+        for (URL url : savedTeamMap.keySet()) {
+            if (savedTeamMap.get(url).getId() < 1) {
                 log.error("Unsaved Team instance was accidentally detected in the map!!!\nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\nIt would be reviewed and resolved");
                 continue;
             }
@@ -104,9 +100,9 @@ public class HTMLParserService {
             String[] playersTable;
             try {
                 playersTable = Jsoup.connect(url.toString())
-                .get().toString().split("<h[23]>");
+                        .get().toString().split("<h[23]>");
             } catch (IOException e) {
-                log.error(e.getMessage(),e);
+                log.error(e.getMessage(), e);
                 continue;
             }
             for (String s : playersTable

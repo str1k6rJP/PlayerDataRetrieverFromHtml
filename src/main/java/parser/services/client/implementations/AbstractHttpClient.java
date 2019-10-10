@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 public abstract class AbstractHttpClient implements HttpClient {
-static final Pattern protocolPattern = Pattern.compile("^[a-z.]+://");
+    static final Pattern protocolPattern = Pattern.compile("^[a-z.]+://");
     static final String REQUEST_SAVE_TEAM = "team/";
     static final String REQUEST_SAVE_PLAYERS = "player/add";
     private static final int PORT_LIMITER = 65535;
@@ -49,7 +49,7 @@ static final Pattern protocolPattern = Pattern.compile("^[a-z.]+://");
                 return false;
             }
             log.error(String.format("%s isn't valid port number!!!\nIt should be natural number less than %S", matcher.group("port"), PORT_LIMITER));
-        return false;
+            return false;
         }
         log.error(String.format("%s isn't valid value for service path", connection));
         return false;

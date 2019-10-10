@@ -12,14 +12,14 @@ public class Team {
     private String teamName;
 
     public Team(String teamName) {
-       setTeamName(teamName);
+        setTeamName(teamName);
     }
 
     public Team() {
 
     }
 
-    public Team(String teamName,int id){
+    public Team(String teamName, int id) {
         setId(id);
         setTeamName(teamName);
     }

@@ -1,10 +1,8 @@
 package parser.services.client;
 
-import org.apache.http.auth.AuthenticationException;
 import parser.beans.Player;
 import parser.beans.Team;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface HttpClient {

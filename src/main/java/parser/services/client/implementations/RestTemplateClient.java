@@ -1,7 +1,6 @@
 package parser.services.client.implementations;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.AuthenticationException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import parser.beans.Player;
 import parser.beans.Team;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,14 +48,14 @@ public class RestTemplateClient extends AbstractHttpClient {
     }
 
     @Override
-    public Team saveTeam(Team team){
+    public Team saveTeam(Team team) {
 
         if (team.getTeamName() != null && team.getTeamName().length() != 0) {
             URL url = null;
             try {
                 url = new URL(getConnectionPathTo(REQUEST_SAVE_TEAM) + team.getTeamName());
             } catch (MalformedURLException e) {
-                log.error("Failed to build valid url!!",e.getMessage(),e);
+                log.error("Failed to build valid url!!", e.getMessage(), e);
                 return null;
             }
             return template.postForObject(url.toString()

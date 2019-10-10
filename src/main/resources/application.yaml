@@ -1,7 +1,7 @@
 server:
   port: 8084
 http-client:
-  type: httpClientRestTemplate
+  type: httpClientApache
   host: http://localhost:8083
   login:
     username: str1k6r

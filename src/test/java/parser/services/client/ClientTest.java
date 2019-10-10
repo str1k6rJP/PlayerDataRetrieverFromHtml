@@ -35,12 +35,12 @@ public abstract class ClientTest {
             ",{\"surname\":\"secondSurname\",\"role\":\"hz\",\"teamId\":\"1\"}]", teamSaveResponse = "{\"id\":\"1\",\"teamName\":\"Success!\"}";
 
     public static final String jsonPlayers = "[ {\n" +
-            "  \"nameAndSurname\" : \"reallySurname\",\n" +
+            "  \"surname\" : \"reallySurname\",\n" +
             "  \"role\" : \"midfielder\",\n" +
             "  \"teamId\" : 1,\n" +
             "  \"id\" : 0\n" +
             "}, {\n" +
-            "  \"nameAndSurname\" : \"secondSurname\",\n" +
+            "  \"surname\" : \"secondSurname\",\n" +
             "  \"role\" : \"hz\",\n" +
             "  \"teamId\" : 1,\n" +
             "  \"id\" : 0\n" +

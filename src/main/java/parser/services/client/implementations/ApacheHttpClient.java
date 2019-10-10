@@ -70,7 +70,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
     @Override
     public Team saveTeam(Team team) {
 
-        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName());
+        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName().replaceAll("\\s","_"));
 
         try {
             postTeam.addHeader(new BasicScheme().authenticate(getCredentials(), postTeam, null));

@@ -73,7 +73,8 @@ public class ParserController {
             for (Map.Entry<URL, Team> entry : unsavedMap.entrySet()) {
                 temporalTeam = httpClient.saveTeam(entry.getValue());
                 if ((temporalTeam == null) || (temporalTeam.getId() < 1)
-                        || (!(temporalTeam.getTeamName().equals(entry.getValue().getTeamName())))) {
+                        || (!((temporalTeam.getTeamName().equals(entry.getValue().getTeamName()))
+                ||(temporalTeam.getTeamName().equals(entry.getValue().getTeamName().replaceAll("\\s","_")))))) {
                     log.error("Team wasn't saved correctly!!\\%nIt will be skipped");
                     continue;
                 }

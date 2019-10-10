@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @Data
-@JsonPropertyOrder({"nameAndSurname", "role", "teamId"})
 public class Player {
 
     private int id;

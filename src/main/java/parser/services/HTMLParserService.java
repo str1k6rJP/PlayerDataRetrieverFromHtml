@@ -54,7 +54,7 @@ public class HTMLParserService {
 
     public Map<URL, Team> retrieveTeams(@NotNull Document document) {
         Element laliga = document.select("table.wikitable").first();
-        if (laliga==null){
+        if (laliga == null) {
             return null;
         }
         HashMap<URL, Team> returnMap = new HashMap<>();

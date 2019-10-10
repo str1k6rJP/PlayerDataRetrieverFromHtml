@@ -17,10 +17,10 @@ public class Player {
     private int teamId;
 
     @JsonCreator
-    public Player(@JsonProperty("surname") String surname
+    public Player(@JsonProperty("surname") String nameAndSurname
             , @JsonProperty("role") String role
             , @JsonProperty("teamId") int teamId) {
-        setSurname(surname);
+        setSurname(nameAndSurname);
         setRole(role);
         setTeamId(teamId);
     }

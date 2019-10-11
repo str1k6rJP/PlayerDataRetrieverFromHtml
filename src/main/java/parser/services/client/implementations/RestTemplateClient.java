@@ -61,7 +61,7 @@ public class RestTemplateClient extends AbstractHttpClient {
             return template.postForObject(url.toString()
                     , new HttpEntity<>(null, getRequestHeaders()), Team.class);
         }
-        log.error(team.getTeamName() + "isn't a correct team name");
+        log.error("Unexpected error has occurred while processing " + team.getTeamName());
         return null;
     }
 

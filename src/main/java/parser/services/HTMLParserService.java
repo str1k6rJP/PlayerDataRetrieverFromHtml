@@ -140,27 +140,24 @@ public class HTMLParserService {
         List<Player> playerNameAndRoleRows = new ArrayList<>(arrayLength);
         int requiredRowsCounter = 1;
         int playerIndex = 0;
-        String role = "";
+        String role;
         String surname;
-        for (String htmlRow : htmlTableRows) {
+
+        for (int i = 0; i<htmlTableRows.length;i++) {
             if (playerIndex >= arrayLength) {
                 break;
             }
             requiredRowsCounter++;
-            switch (requiredRowsCounter) { //NOSONAR
+            if (requiredRowsCounter==4){
+                role = htmlTableRows[i].split(TITLE_ATTR)[1].split("[\"(]")[0];
+                surname = htmlTableRows[++i].split(TITLE_ATTR)[1].split("[\"(]")[0];
 
-                case 4:
-                    role = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];
-                    break;
-                case 5:
-                    surname = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];
-                    playerNameAndRoleRows.add(new Player(surname, role, currentTeamId));
-                    requiredRowsCounter = 1;
-                    playerIndex++;
-                    break;
-                default:
-                    break;
+                playerNameAndRoleRows.add(new Player(surname, role, currentTeamId));
+                playerIndex++;
+                requiredRowsCounter=1;
+
             }
+
         }
         return playerNameAndRoleRows;
     }

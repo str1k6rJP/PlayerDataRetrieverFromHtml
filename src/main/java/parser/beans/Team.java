@@ -14,7 +14,7 @@ public class Team {
     }
 
     public Team() {
-
+        //Necessary for JacksonMarshaller (sending and retrieving objects via SpringBoot's RESTful API
     }
 
     public Team(String teamName, int id) {

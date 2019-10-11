@@ -39,6 +39,7 @@ public class ParserController {
      */
     public static final String RETRIEVED_TEMPLATE = "%s %s were retrieved from %s";
     public static final String WEBDOC_FAILED = "\\%nWeb document wasn't downloaded correctly!\\%n";
+    public static final String TEAMS = "teams";
     @Autowired
     @Qualifier("configuredHtmlParserService")
     private HTMLParserService parserService;
@@ -51,7 +52,6 @@ public class ParserController {
         if (players == null || players.isEmpty()) {
             Map<URI, Team> unsavedMap;
             Document doc = parserService.getWebDoc();
-            Team temporalTeam;
             if (doc != null) {
                 unsavedMap = parserService.retrieveTeams(doc);
             } else {
@@ -60,32 +60,20 @@ public class ParserController {
                         "PLease consider resetting it (it can be done with POST method at /autofill/setLink with <protocol://host:port> in the body";
             }
             if (unsavedMap == null || unsavedMap.isEmpty()) {
-                String errorReport = String.format(RETRIEVED_TEMPLATE, "No", "teams", parserService.getLinkToSiteWithTeams());
+                String errorReport = String.format(RETRIEVED_TEMPLATE, "No", TEAMS, parserService.getLinkToSiteWithTeams());
                 log.error(errorReport);
                 return errorReport;
             }
 
 
-            log.info(String.format(RETRIEVED_TEMPLATE, unsavedMap.size(), "teams", parserService.getLinkToSiteWithTeams()));
+            log.info(String.format(RETRIEVED_TEMPLATE, unsavedMap.size(), TEAMS, parserService.getLinkToSiteWithTeams()));
 
-            Map<URI, Team> savedMap = new HashMap<>(unsavedMap.size());
+            Map<URI, Team> savedMap =getSavedMap(unsavedMap);
 
-            for (Map.Entry<URI, Team> entry : unsavedMap.entrySet()) {
-                temporalTeam = httpClient.saveTeam(entry.getValue());
-                if ((temporalTeam == null) || (temporalTeam.getId() < 1)
-                        || (!((temporalTeam.getTeamName().equals(entry.getValue().getTeamName()))
-                        || (temporalTeam.getTeamName().equals(entry.getValue().getTeamName().replaceAll("\\s", "_")))))) {
-                    log.error("Team wasn't saved correctly!!\\%nIt will be skipped");
-                    continue;
-                }
-                savedMap.put(entry.getKey(), temporalTeam);
-
-            }
-
-            log.info(String.format(RETRIEVED_TEMPLATE, savedMap.size(), "teams", "the database after saving"));
-            if (savedMap.size() != unsavedMap.size()) {
-                log.error("There are less teams were saved than attempted to save");
-            }
+            log.info(String.format(RETRIEVED_TEMPLATE, savedMap.size(), TEAMS, "the database after saving"));
+            
+            
+            checkMapSizes(savedMap.size(),unsavedMap.size());
 
             playerListToSave = parserService.getPlayersListBySiteWithTeamList(savedMap);
 
@@ -93,6 +81,33 @@ public class ParserController {
             playerListToSave = players;
         }
         return String.format("{\"is-success\":\"%s\"}", httpClient.savePlayers(playerListToSave));
+    }
+    
+    private Map<URI,Team> getSavedMap(Map<URI,Team> unsavedMap){
+        Team temporalTeam;
+        Map<URI, Team> savedMap = new HashMap<>(unsavedMap.size());
+
+        for (Map.Entry<URI, Team> entry : unsavedMap.entrySet()) {
+            temporalTeam = httpClient.saveTeam(entry.getValue());
+            if ((temporalTeam == null) || (temporalTeam.getId() < 1)
+                    || (!((temporalTeam.getTeamName().equals(entry.getValue().getTeamName()))
+                    || (temporalTeam.getTeamName().equals(entry.getValue().getTeamName().replaceAll("\\s", "_")))))) {
+                log.error("Team wasn't saved correctly!!\\%nIt will be skipped");
+                continue;
+            }
+            savedMap.put(entry.getKey(), temporalTeam);
+
+        }
+        
+        return savedMap;
+    }
+    
+    private boolean checkMapSizes(int savedMapSize,int unsavedMapSize){
+        if (savedMapSize!= unsavedMapSize) {
+            log.error("There are less teams were saved than attempted to save");
+            return false;
+        }
+        return true;
     }
 
 

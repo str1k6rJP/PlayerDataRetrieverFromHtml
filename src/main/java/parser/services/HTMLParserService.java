@@ -154,7 +154,6 @@ public class HTMLParserService {
                     break;
                 case 5:
                     surname = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];
-
                     playerNameAndRoleRows.add(new Player(surname, role, currentTeamId));
                     requiredRowsCounter = 1;
                     playerIndex++;

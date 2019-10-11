@@ -35,7 +35,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
             entity = new StringEntity(objectMapper.writeValueAsString(playerList), StandardCharsets.UTF_8);
             postPlayers.setEntity(entity);
         } catch (JsonProcessingException e) {
-            log.error("Failed while parsing to JSON \\%n");
+            log.error("Failed while parsing to JSON \\%n", e);
             return false;
         }
 
@@ -60,7 +60,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
             try {
                 return executePost(postPlayers);
             } catch (IOException e1) {
-                log.error("Failed while second attempt", e.getCause());
+                log.error("Failed while second attempt", e.getCause(), e1);
             }
         }
         return false;
@@ -70,19 +70,19 @@ public class ApacheHttpClient extends AbstractHttpClient {
     @Override
     public Team saveTeam(Team team) {
 
-        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName().replaceAll("\\s","_"));
+        HttpPost postTeam = new HttpPost(getConnectionPathTo(REQUEST_SAVE_TEAM) + "/" + team.getTeamName().replaceAll("\\s", "_"));
 
         try {
             postTeam.addHeader(new BasicScheme().authenticate(getCredentials(), postTeam, null));
         } catch (AuthenticationException e) {
-            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: \\%n%s"), e);
+            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: \\%n%s", getUsername(), getPassword(), e.getMessage()), e);
             return null;
         }
 
         try (CloseableHttpResponse response = client.execute(postTeam)) {
             return objectMapper.readValue(response.getEntity().getContent(), Team.class);
         } catch (IOException e) {
-            log.error("Failed to get response!", e.getMessage());
+            log.error("Failed to get response!", e.getMessage(), e);
         }
         return null;
     }

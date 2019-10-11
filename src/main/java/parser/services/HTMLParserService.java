@@ -11,7 +11,8 @@ import parser.beans.Player;
 import parser.beans.Team;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class HTMLParserService {
 
     private static final int TEAM_PLAYERS_MULTIPLIER = 30;
+    private static final String TITLE_ATTR = "title=\"";
 
     private String lastURLToTeamList;
 
@@ -52,28 +54,27 @@ public class HTMLParserService {
     }
 
 
-    public Map<URL, Team> retrieveTeams(@NotNull Document document) {
+    public Map<URI, Team> retrieveTeams(@NotNull Document document) {
         Element laliga = document.select("table.wikitable").first();
         if (laliga == null) {
             return null;
         }
-        HashMap<URL, Team> returnMap = new HashMap<>();
+        HashMap<URI, Team> returnMap = new HashMap<>();
         Elements rows = laliga.getElementsByTag("tr");
-        URL url;
+        URI url;
         Team currentTeam;
 
         for (Element row : rows) {
             if (row.toString().contains("<th>")) {
                 continue;
             }
-            currentTeam = new Team(row.toString().split("title=\"")[1].split("\"")[0]);
-            //log.info(String.format("Team instance %s was successfully saved to db", currentTeam.toString()));
+            currentTeam = new Team(row.toString().split(TITLE_ATTR)[1].split("\"")[0]);
 
             try {
-                url = new URL(String.format("https://en.wikipedia.org%s", row.toString().split("\n+")[1].split(">")[1].split("\"")[1]));
+                url = new URI(String.format("https://en.wikipedia.org%s", row.toString().split("\n+")[1].split(">")[1].split("\"")[1]));
 
                 returnMap.put(url, currentTeam);
-            } catch (IOException e) {
+            } catch (URISyntaxException e) {
                 log.error(e.getMessage(), e);
             }
 
@@ -88,21 +89,21 @@ public class HTMLParserService {
      *
      * @return list of players retrieved from the web document
      */
-    public List<Player> getPlayersListBySiteWithTeamList(Map<URL, Team> savedTeamMap) {
+    public List<Player> getPlayersListBySiteWithTeamList(Map<URI, Team> savedTeamMap) {
         List<Player> players = new ArrayList<>(savedTeamMap.size() * TEAM_PLAYERS_MULTIPLIER);
 
         String[] playersFirstTablePart = null;
         String[] playersSecondTablePart = null;
 
-        for (URL url : savedTeamMap.keySet()) {
-            if (savedTeamMap.get(url).getId() < 1) {
+        for (Map.Entry<URI, Team> entry : savedTeamMap.entrySet()) {
+            if (savedTeamMap.get(entry.getValue()).getId() < 1) {
                 log.error("Unsaved Team instance was accidentally detected in the map!!!\\%nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\\%nIt would be reviewed and resolved");
                 continue;
             }
 
             String[] playersTable;
             try {
-                playersTable = Jsoup.connect(url.toString())
+                playersTable = Jsoup.connect(entry.getKey().toString())
                         .get().toString().split("<h[23]>");
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
@@ -117,8 +118,8 @@ public class HTMLParserService {
                 }
             }
 
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, savedTeamMap.get(url).getId()));
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, savedTeamMap.get(url).getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, savedTeamMap.get(entry.getValue()).getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, savedTeamMap.get(entry.getValue()).getId()));
         }
 
         lastURLToTeamList = linkToSiteWithTeams;
@@ -136,26 +137,28 @@ public class HTMLParserService {
     private List<Player> getPlayerLayoutsFromHTMLTableArray(String[] htmlTableRows, int currentTeamId) {
         int arrayLength = htmlTableRows.length / 4;
         List<Player> playerNameAndRoleRows = new ArrayList<>(arrayLength);
-        int requiredRowsCounter = 1, playerIndex = 0;
+        int requiredRowsCounter = 1;
+        int playerIndex = 0;
         String role = "";
-        String surname = "";
+        String surname;
         for (String htmlRow : htmlTableRows) {
             if (playerIndex >= arrayLength) {
                 break;
             }
             requiredRowsCounter++;
             switch (requiredRowsCounter) {
-                default:
-                    break;
+
                 case 4:
-                    role = htmlRow.split("title=\"")[1].split("[\"(]")[0];
+                    role = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];
                     break;
                 case 5:
-                    surname = htmlRow.split("title=\"")[1].split("[\"(]")[0];
+                    surname = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];
 
                     playerNameAndRoleRows.add(new Player(surname, role, currentTeamId));
                     requiredRowsCounter = 1;
                     playerIndex++;
+                    break;
+                default:
                     break;
             }
         }

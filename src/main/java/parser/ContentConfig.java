@@ -49,7 +49,7 @@ public class ContentConfig {
 
     @Bean
     public HttpClient httpClient() {
-        if (httpClientType.equals("httpClientRestTemplate")) {
+        if ("httpClientRestTemplate".equals(httpClientType)) {
             return httpClientRestTemplate();
         } else {
             return httpClientApache();

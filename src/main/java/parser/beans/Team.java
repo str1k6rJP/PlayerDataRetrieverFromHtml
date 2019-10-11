@@ -1,6 +1,5 @@
 package parser.beans;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @Data

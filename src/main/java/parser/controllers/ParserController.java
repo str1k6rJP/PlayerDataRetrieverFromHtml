@@ -19,7 +19,7 @@ import parser.services.HTMLParserService;
 import parser.services.client.HttpClient;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +47,9 @@ public class ParserController {
 
     @PostMapping("/players")
     public String putPlayerSetAndTeamsToAppViaAPI(@RequestBody(required = false) List<Player> players) throws IOException {
-
-        if (players == null || players.size() == 0) {
-            Map<URL, Team> unsavedMap;
+        List<Player> playerListToSave;
+        if (players == null || players.isEmpty()) {
+            Map<URI, Team> unsavedMap;
             Document doc = parserService.getWebDoc();
             Team temporalTeam;
             if (doc != null) {
@@ -59,7 +59,7 @@ public class ParserController {
                 return WEBDOC_FAILED + "The most possible reason is that link to site with teams is absent or incorrect\\%n" +
                         "PLease consider resetting it (it can be done with POST method at /autofill/setLink with <protocol://host:port> in the body";
             }
-            if (unsavedMap == null || unsavedMap.size() == 0) {
+            if (unsavedMap == null || unsavedMap.isEmpty()) {
                 String errorReport = String.format(RETRIEVED_TEMPLATE, "No", "teams", parserService.getLinkToSiteWithTeams());
                 log.error(errorReport);
                 return errorReport;
@@ -68,13 +68,13 @@ public class ParserController {
 
             log.info(String.format(RETRIEVED_TEMPLATE, unsavedMap.size(), "teams", parserService.getLinkToSiteWithTeams()));
 
-            Map<URL, Team> savedMap = new HashMap<>(unsavedMap.size());
+            Map<URI, Team> savedMap = new HashMap<>(unsavedMap.size());
 
-            for (Map.Entry<URL, Team> entry : unsavedMap.entrySet()) {
+            for (Map.Entry<URI, Team> entry : unsavedMap.entrySet()) {
                 temporalTeam = httpClient.saveTeam(entry.getValue());
                 if ((temporalTeam == null) || (temporalTeam.getId() < 1)
                         || (!((temporalTeam.getTeamName().equals(entry.getValue().getTeamName()))
-                ||(temporalTeam.getTeamName().equals(entry.getValue().getTeamName().replaceAll("\\s","_")))))) {
+                        || (temporalTeam.getTeamName().equals(entry.getValue().getTeamName().replaceAll("\\s", "_")))))) {
                     log.error("Team wasn't saved correctly!!\\%nIt will be skipped");
                     continue;
                 }
@@ -87,10 +87,12 @@ public class ParserController {
                 log.error("There are less teams were saved than attempted to save");
             }
 
-            players = parserService.getPlayersListBySiteWithTeamList(savedMap);
+            playerListToSave = parserService.getPlayersListBySiteWithTeamList(savedMap);
 
+        } else {
+            playerListToSave = players;
         }
-        return String.format("{\"is-success\":\"%s\"}", httpClient.savePlayers(players));
+        return String.format("{\"is-success\":\"%s\"}", httpClient.savePlayers(playerListToSave));
     }
 
 

@@ -53,13 +53,13 @@ public class ContentConfig {
     public HttpClient httpClient() {
         HttpClient clientToReturn;
         if ("httpClientRestTemplate".equals(httpClientType)) {
-            clientToReturn =  httpClientRestTemplate();
+            clientToReturn = httpClientRestTemplate();
         } else {
-            clientToReturn =  httpClientApache();
+            clientToReturn = httpClientApache();
         }
 
-        log.info(String.format("Bean of %s was retrieved from context; class=%s",httpClientType,clientToReturn.getClass()));
-return clientToReturn;
+        log.info(String.format("Bean of %s was retrieved from context; class=%s", httpClientType, clientToReturn.getClass()));
+        return clientToReturn;
     }
 
     @Bean(name = "configuredHtmlParserService")

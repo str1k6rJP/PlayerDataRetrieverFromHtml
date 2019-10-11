@@ -51,7 +51,7 @@ public abstract class AbstractHttpClient implements HttpClient {
         return false;
     }
 
-    boolean setConnectionURLFromValidString(String connection){
+    boolean setConnectionURLFromValidString(String connection) {
         try {
             this.initialConnPath = new URL(connection);
             return true;

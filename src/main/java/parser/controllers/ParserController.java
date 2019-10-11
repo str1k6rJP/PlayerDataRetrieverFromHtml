@@ -68,12 +68,12 @@ public class ParserController {
 
             log.info(String.format(RETRIEVED_TEMPLATE, unsavedMap.size(), TEAMS, parserService.getLinkToSiteWithTeams()));
 
-            Map<URI, Team> savedMap =getSavedMap(unsavedMap);
+            Map<URI, Team> savedMap = getSavedMap(unsavedMap);
 
             log.info(String.format(RETRIEVED_TEMPLATE, savedMap.size(), TEAMS, "the database after saving"));
-            
-            
-            checkMapSizes(savedMap.size(),unsavedMap.size());
+
+
+            checkMapSizes(savedMap.size(), unsavedMap.size());
 
             playerListToSave = parserService.getPlayersListBySiteWithTeamList(savedMap);
 
@@ -82,8 +82,8 @@ public class ParserController {
         }
         return String.format("{\"is-success\":\"%s\"}", httpClient.savePlayers(playerListToSave));
     }
-    
-    private Map<URI,Team> getSavedMap(Map<URI,Team> unsavedMap){
+
+    private Map<URI, Team> getSavedMap(Map<URI, Team> unsavedMap) {
         Team temporalTeam;
         Map<URI, Team> savedMap = new HashMap<>(unsavedMap.size());
 
@@ -98,12 +98,12 @@ public class ParserController {
             savedMap.put(entry.getKey(), temporalTeam);
 
         }
-        
+
         return savedMap;
     }
-    
-    private boolean checkMapSizes(int savedMapSize,int unsavedMapSize){
-        if (savedMapSize!= unsavedMapSize) {
+
+    private boolean checkMapSizes(int savedMapSize, int unsavedMapSize) {
+        if (savedMapSize != unsavedMapSize) {
             log.error("There are less teams were saved than attempted to save");
             return false;
         }

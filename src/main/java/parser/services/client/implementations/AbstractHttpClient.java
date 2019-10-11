@@ -32,18 +32,14 @@ public abstract class AbstractHttpClient implements HttpClient {
      * @param connection path to the target service
      * @return true in case URL is valid
      */
+    @Override
     public boolean setInitialConnectionPath(String connection) {
         Matcher matcher = connectionPattern.matcher(connection);
 
         if (matcher.find()) {
             if (Integer.parseInt(matcher.group("port")) <= PORT_LIMITER) {
                 if (connectionPattern.matcher(connection).find()) {
-                    try {
-                        this.initialConnPath = new URL(connection);
-                        return true;
-                    } catch (MalformedURLException e) {
-                        log.error("Failed to set valid link!!!", e.getMessage(), e);
-                    }
+                    return setConnectionURLFromValidString(connection);
                 }
                 log.error("URL specified missing a protocol");
                 return false;
@@ -52,6 +48,16 @@ public abstract class AbstractHttpClient implements HttpClient {
             return false;
         }
         log.error(String.format("%s isn't valid value for service path", connection));
+        return false;
+    }
+
+    boolean setConnectionURLFromValidString(String connection){
+        try {
+            this.initialConnPath = new URL(connection);
+            return true;
+        } catch (MalformedURLException e) {
+            log.error("Failed to set valid link!!!", e.getMessage(), e);
+        }
         return false;
     }
 

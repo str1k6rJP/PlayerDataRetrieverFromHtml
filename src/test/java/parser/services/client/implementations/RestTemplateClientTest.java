@@ -18,7 +18,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class RestTemplateClientTest extends ClientTest {
+public class RestTemplateClientTest extends ClientTest { //NOSONAR
+    //because all the tests implemented in the parent, and this class' purpose is only to configure tests for the right aervice
 
     @Autowired
     @Qualifier("httpClientRestTemplate")

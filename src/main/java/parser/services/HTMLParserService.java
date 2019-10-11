@@ -95,7 +95,7 @@ public class HTMLParserService {
         String[] playersFirstTablePart = null;
         String[] playersSecondTablePart = null;
 
-        for (Map.Entry<URI, Team> entry : savedTeamMap.entrySet()) {
+        for (Map.Entry<URI, Team> entry : savedTeamMap.entrySet()) { //NOSONAR
 
             if (entry.getValue().getId() < 1) {
                 log.error("Unsaved Team instance was accidentally detected in the map!!!\\%nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\\%nIt would be reviewed and resolved");
@@ -147,7 +147,7 @@ public class HTMLParserService {
                 break;
             }
             requiredRowsCounter++;
-            switch (requiredRowsCounter) {
+            switch (requiredRowsCounter) { //NOSONAR
 
                 case 4:
                     role = htmlRow.split(TITLE_ATTR)[1].split("[\"(]")[0];

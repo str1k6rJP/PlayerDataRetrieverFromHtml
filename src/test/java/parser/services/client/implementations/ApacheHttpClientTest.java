@@ -10,7 +10,8 @@ import parser.services.client.ClientTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApacheHttpClientTest extends ClientTest {
+public class ApacheHttpClientTest extends ClientTest { //NOSONAR
+    //because all the tests implemented in the parent, and this class' purpose is only to configure tests for the right aervice
 
     @Autowired
     @Qualifier("httpClientApache")

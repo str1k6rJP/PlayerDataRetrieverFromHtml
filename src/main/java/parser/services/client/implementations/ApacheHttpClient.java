@@ -75,7 +75,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
         try {
             postTeam.addHeader(new BasicScheme().authenticate(getCredentials(), postTeam, null));
         } catch (AuthenticationException e) {
-            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: \\%n%s", getUsername(), getPassword(), e.getMessage()), e);
+            log.error(String.format("Failed to access saveTeam()(so null will be returned) in with username %s and password %s in case of: %n%s", getUsername(), getPassword(), e.getMessage()), e);
             return null;
         }
 

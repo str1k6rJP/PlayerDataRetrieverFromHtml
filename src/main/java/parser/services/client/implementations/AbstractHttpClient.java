@@ -48,7 +48,7 @@ public abstract class AbstractHttpClient implements HttpClient {
                 log.error("URL specified missing a protocol");
                 return false;
             }
-            log.error(String.format("%s isn't valid port number!!! \\%n It should be natural number less than %s", matcher.group("port"), PORT_LIMITER));
+            log.error(String.format("%s isn't valid port number!!!%n It should be natural number less than %s", matcher.group("port"), PORT_LIMITER));
             return false;
         }
         log.error(String.format("%s isn't valid value for service path", connection));

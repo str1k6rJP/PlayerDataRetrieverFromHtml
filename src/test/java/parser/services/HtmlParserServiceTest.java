@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import parser.beans.Team;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,10 +67,10 @@ public class HtmlParserServiceTest {
 
     }
 
-    private Map<URL, Team> getMap() throws MalformedURLException {
-        Map<URL, Team> result = new HashMap<>();
-        result.put(new URL("https://en.wikipedia.org/wiki/Deportivo_Alav%C3%A9s"), new Team("Deportivo Alavés", 1));
-        result.put(new URL("https://en.wikipedia.org/wiki/Athletic_Bilbao"), new Team("Athletic Bilbao", 2));
+    private Map<URI, Team> getMap() throws URISyntaxException {
+        Map<URI, Team> result = new HashMap<>();
+        result.put(new URI("https://en.wikipedia.org/wiki/Deportivo_Alav%C3%A9s"), new Team("Deportivo Alavés", 1));
+        result.put(new URI("https://en.wikipedia.org/wiki/Athletic_Bilbao"), new Team("Athletic Bilbao", 2));
         return result;
     }
 

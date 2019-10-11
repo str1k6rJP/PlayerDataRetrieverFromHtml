@@ -96,7 +96,8 @@ public class HTMLParserService {
         String[] playersSecondTablePart = null;
 
         for (Map.Entry<URI, Team> entry : savedTeamMap.entrySet()) {
-            if (savedTeamMap.get(entry.getValue()).getId() < 1) {
+
+            if (entry.getValue().getId() < 1) {
                 log.error("Unsaved Team instance was accidentally detected in the map!!!\\%nThough it will be skipped, but this is a major issue so please connect the author at dmytro.maliovanyi@gmail.com\\%nIt would be reviewed and resolved");
                 continue;
             }
@@ -118,8 +119,8 @@ public class HTMLParserService {
                 }
             }
 
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, savedTeamMap.get(entry.getValue()).getId()));
-            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, savedTeamMap.get(entry.getValue()).getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersFirstTablePart, entry.getValue().getId()));
+            players.addAll(getPlayerLayoutsFromHTMLTableArray(playersSecondTablePart, entry.getValue().getId()));
         }
 
         lastURLToTeamList = linkToSiteWithTeams;

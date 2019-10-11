@@ -1,6 +1,7 @@
 package parser;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import parser.services.client.implementations.RestTemplateClient;
 import javax.validation.constraints.NotNull;
 
 @Configuration
+@Slf4j
 public class ContentConfig {
 
     @NotNull
@@ -36,24 +38,28 @@ public class ContentConfig {
     @Bean(name = "httpClientApache")
     public ApacheHttpClient httpClientApache() {
         ApacheHttpClient apacheHttpClient = new ApacheHttpClient();
-        System.err.println("apache: " + apacheHttpClient.getClass());
+        log.info("apache: " + apacheHttpClient.getClass());
         return setDefaultConnectionConfig(apacheHttpClient);
     }
 
     @Bean(name = "httpClientRestTemplate")
     public RestTemplateClient httpClientRestTemplate() {
         RestTemplateClient restTemplateClient = new RestTemplateClient();
-        System.err.println("restTemplate: " + restTemplateClient.getClass());
+        log.info("restTemplate: " + restTemplateClient.getClass());
         return setDefaultConnectionConfig(restTemplateClient);
     }
 
     @Bean
     public HttpClient httpClient() {
+        HttpClient clientToReturn;
         if ("httpClientRestTemplate".equals(httpClientType)) {
-            return httpClientRestTemplate();
+            clientToReturn =  httpClientRestTemplate();
         } else {
-            return httpClientApache();
+            clientToReturn =  httpClientApache();
         }
+
+        log.info(String.format("Bean of %s was retrieved from context; class=%s",httpClientType,clientToReturn.getClass()));
+return clientToReturn;
     }
 
     @Bean(name = "configuredHtmlParserService")
